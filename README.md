@@ -1,1 +1,2 @@
 # Easy_book
+Provide a platform for consumers to have a seat selection service when making restaurant reservations, and establish a platform membership system based on the number of visits to the store or the amount of consumption. Hence, consumers with higher membership levels have priority in seat selection. In addition, stores can also use this platform to arrange seats for consumers who call to make reservations.
