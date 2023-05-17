@@ -40,7 +40,7 @@ docker compose up backend
 ```docker
 easybookbackend-backend-1  | INFO:     Application startup complete.
 ```
-然後就可以在搜尋引擎輸入127.0.0.1:8001/docs#/就可以看到FastAPI的Swagger UI介面了。
+然後就可以在搜尋引擎輸入`127.0.0.1:8001/docs#/`就可以看到FastAPI的Swagger UI介面了。
 
 ## Backend Structure
 ### Routers
