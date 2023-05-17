@@ -7,8 +7,31 @@
 ```docker
 services:
   backend:
-    build: . # 設定上下文目錄，以該目錄為準指定Dockerfile
-    restart: always
+    ...
     volumes:
-      - (這邊要放自己的local路徑)/EasyBookBackend/my-app:/data
+      - [這邊要放自己的local路徑]/EasyBookBackend/my-app:/data
+    ...
+```
+2. database.env
+```SQL
+ACCOUNT=自己設一個帳號
+PASSWORD=自己設一個密碼
+ADDRESS=Docker上的IP位址:3306
+DATABASE=easybook
+```
+* 不知道Docker的IP位址可以用下面的語法來查詢：
+1. **MAC** : docker inspect [Container ID] | grep IPAddress
+2. **Windows** : docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [Container ID]
+
+DB Container ID：打開Docker Dashboard後，在DB的Name下面有一串可以copy的數字+字串
+
+### Start Up
+Step.1 - start up DB
+```cmd
+docker compose up db -d
+```
+
+Step.2 - start up Backend
+```cmd
+docker compose up backend
 ```
