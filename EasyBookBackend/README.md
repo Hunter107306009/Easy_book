@@ -31,6 +31,9 @@ Step.1 - start up DB
 ```cmd
 docker compose up db -d
 ```
+DB啟動後，開啟MySQL workbench連線：
+Host Name: `127.0.0.1` Port: `3308`
+進去後就可以看到一開始init的DB了。
 
 Step.2 - start up Backend
 ```cmd
