@@ -19,11 +19,11 @@ PASSWORD=自己設一個密碼
 ADDRESS=Docker上的IP位址:3306
 DATABASE=easybook
 ```
-* 不知道Docker的IP位址可以用下面的語法來查詢：
+> 不知道Docker的IP位址可以用下面的語法來查詢：
 1. **MAC** : docker inspect [Container ID] | grep IPAddress
 2. **Windows** : docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [Container ID]
 
-DB Container ID：打開Docker Dashboard後，在DB的Name下面有一串可以copy的數字+字串
+* DB Container ID：打開Docker Dashboard後，在DB的Name下面有一串可以copy的數字+字串
 
 ### Start Up
 Step.1 - start up DB
