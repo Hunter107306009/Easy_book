@@ -27,7 +27,7 @@ DATABASE=easybook
 * DB Container ID：打開Docker Dashboard後，在DB的Name下面有一串可以copy的數字+字串
 
 ### Start Up
-Step.1 - start up DB
+> Step.1 - start up DB
 ```cmd
 docker compose up db -d
 ```
@@ -35,7 +35,7 @@ DB啟動後，開啟MySQL workbench連線：
 Host Name: `127.0.0.1` Port: `3308`
 進去後就可以看到一開始init的DB了。
 
-Step.2 - start up Backend
+> Step.2 - start up Backend
 ```cmd
 docker compose up backend
 ```
