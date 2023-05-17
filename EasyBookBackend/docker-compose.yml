@@ -1,0 +1,35 @@
+version: "3.7"
+
+networks:
+  my-network:
+
+
+services:
+  backend:
+    build: . # 設定上下文目錄，以該目錄為準指定Dockerfile
+    restart: always
+    volumes:
+      - /Users/yuu/EasyBookBackend/my-app:/data
+    depends_on:
+      - db
+    ports:
+      - "8001:8001"
+    environment:
+      - TZ=Asia/Taipei
+    env_file:
+      - ./database.env
+    networks:
+      - my-network
+    command: "python3 /data/main.py"
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_DATABASE=easybook
+      - MYSQL_ROOT_PASSWORD=
+      - TZ=Asia/Taipei
+    ports:
+      - "3308:3306"
+    networks:
+      - my-network
