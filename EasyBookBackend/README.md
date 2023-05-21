@@ -37,6 +37,12 @@ Host Name: `127.0.0.1` Port: `3308`
 進去後就可以看到一開始init的DB了。
 
 > Step.2 - start up Backend
+* 先把main.py裡的這段程式碼取消註解(這段是用來自動建DB的，我把紹耘建的schema都寫進後端了)
+![dockerIP](https://github.com/Hunter107306009/Easy_book/blob/648f8574e7a282d439de9f652539376504842407/EasyBookBackend/image/DB_startup.png)
+紹耘建的schema：(會員、餐廳、候位ID我都改成DB裡的AutoIncrement了)
+![dockerIP](https://github.com/Hunter107306009/Easy_book/blob/648f8574e7a282d439de9f652539376504842407/EasyBookBackend/image/update_DB.png)
+
+* 接下來在cmd執行這行指令就可以了～
 ```cmd
 docker compose up backend
 ```
@@ -45,6 +51,7 @@ docker compose up backend
 easybookbackend-backend-1  | INFO:     Application startup complete.
 ```
 然後就可以在搜尋引擎輸入`127.0.0.1:8001/docs#/`就可以看到FastAPI的Swagger UI介面了。
+* **成功後要記得把上面的程式碼再註解起來唷！不然DB會一直drop create，原本丟進去的資料會不見！**
 
 ## Backend Structure
 ### Routers
