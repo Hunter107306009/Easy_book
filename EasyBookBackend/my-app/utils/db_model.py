@@ -8,6 +8,7 @@ class Member(BASE):
     ID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     Name = Column(String(255), nullable=False)
     Phone = Column(String(20), nullable=False)
+    Password = Column(String(255), nullable=False)
     MLevel = Column(INTEGER, nullable=False)
     MPoints = Column(INTEGER)
     AccumSpend = Column(FLOAT(10, 2))

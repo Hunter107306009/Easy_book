@@ -21,12 +21,12 @@ async def get_account_info_by_phone(phone: str, db: Session):
         return None
 
 
-async def create_member(postRequest: schema.CreateMemberRequest, db: Session):
+async def create_member(hash_pwd, postRequest: schema.CreateMemberRequest, db: Session):
     db.add(
         Member(
             Name=postRequest.name,
             Phone=postRequest.phone,
-            # Password=hash_pwd,
+            Password=hash_pwd,
             MLevel=1,
             MPoints=0,
             AccumSpend=0,
