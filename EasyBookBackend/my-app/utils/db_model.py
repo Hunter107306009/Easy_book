@@ -5,7 +5,7 @@ from sqlalchemy import INTEGER, Column, DateTime, ForeignKey, String, FLOAT
 class Member(BASE):
     __tablename__ = "MEMBER"
 
-    ID = Column(String(200), primary_key=True, nullable=False)
+    ID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     Name = Column(String(255), nullable=False)
     Phone = Column(String(20), nullable=False)
     MLevel = Column(INTEGER, nullable=False)
@@ -16,7 +16,7 @@ class Member(BASE):
 class Alternate(BASE):
     __tablename__ = "ALTERNATE"
 
-    ALNO = Column(INTEGER, primary_key=True, nullable=False)
+    ALNO = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     ALRID = Column(INTEGER, primary_key=True, nullable=False)
     ALOrder = Column(INTEGER)
 
@@ -42,7 +42,7 @@ class Consumptions(BASE):
 class Reservation(BASE):
     __tablename__ = "RESERVATION"
 
-    ReNumber = Column(INTEGER, primary_key=True, nullable=False)
+    ReNumber = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     ReRID = Column(INTEGER, primary_key=True, nullable=False)
     RePhone = Column(String(20), nullable=False)
     ResName = Column(String(255), nullable=False)
@@ -55,7 +55,7 @@ class Reservation(BASE):
 class Restaurant(BASE):
     __tablename__ = "RESTAURANT"
 
-    RID = Column(INTEGER, primary_key=True, nullable=False)
+    RID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     RName = Column(String(255))
     RPhone = Column(String(20), nullable=False)
     RAddress = Column(String(255))
