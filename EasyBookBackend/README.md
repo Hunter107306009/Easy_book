@@ -59,6 +59,9 @@ easybookbackend-backend-1  | INFO:     Application startup complete.
 * 從DB撈資料出來
 * 用python的SQLAlchemy來寫
 
+> schema.py
+* 定義從前端要傳過來哪些資料，以及定義這些資料的型態。(與google sheet的input欄位相同)
+
 ### Utils
 * 這層是DB的一些設定，平常不太會動到。
 
