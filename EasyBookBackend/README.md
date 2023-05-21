@@ -25,7 +25,7 @@ DATABASE=easybook
 2. **Windows** : docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [Container ID]
 
 * DB Container ID：打開Docker Dashboard後，在DB的Name下面有一串可以copy的數字+字串
-![docker_IP](https://github.com/Hunter107306009/Easy_book/blob/648f8574e7a282d439de9f652539376504842407/EasyBookBackend/image/docker_DB_IP.png =100x200)
+<img src="[dockerIP](https://github.com/Hunter107306009/Easy_book/blob/648f8574e7a282d439de9f652539376504842407/EasyBookBackend/image/docker_DB_IP.png)" height="240px" width="160px" />
 
 ### Start Up
 > Step.1 - start up DB
