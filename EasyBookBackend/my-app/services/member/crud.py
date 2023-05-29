@@ -8,9 +8,26 @@ async def get_account_info_by_phone(phone: str, db: Session):
     member_info = [
         {
             "ID": data[0],
-            "Phone": data[1],
+            "Name": data[1],
+            "Phone": data[2],
+            "Pwd": data[3],
+            "Gender": data[4],
+            "Birthday": data[5],
+            "MLevel": data[6],
+            "MPoints": data[7],
+            "AccumSpend": data[8],
         }
-        for data in db.query(Member.ID, Member.Phone)
+        for data in db.query(
+            Member.ID,
+            Member.Name,
+            Member.Phone,
+            Member.Pwd,
+            Member.Gender,
+            Member.Birthday,
+            Member.MLevel,
+            Member.MPoints,
+            Member.AccumSpend,
+        )
         .filter(Member.Phone == phone)
         .all()
     ]
@@ -26,7 +43,9 @@ async def create_member(hash_pwd, postRequest: schema.CreateMemberRequest, db: S
         Member(
             Name=postRequest.name,
             Phone=postRequest.phone,
-            Password=hash_pwd,
+            Pwd=hash_pwd,
+            Gender=postRequest.gender,
+            Birthday=postRequest.birthday,
             MLevel=1,
             MPoints=0,
             AccumSpend=0,

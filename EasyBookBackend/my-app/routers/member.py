@@ -12,5 +12,9 @@ router = APIRouter(prefix="/member", tags=["member"])
 async def create_member(
     createMemberRequest: schema.CreateMemberRequest, db: Session = Depends(get_db)
 ):
-    # uuid_code = str(uuid.uuid4())
     return await business.create_member(createMemberRequest, db)
+
+
+@router.post("/login", summary="登入")
+async def login(phone: str, pwd: str, db: Session = Depends(get_db)):
+    return await business.login(phone, pwd, db)
