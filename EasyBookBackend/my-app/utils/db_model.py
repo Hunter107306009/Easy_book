@@ -42,6 +42,7 @@ class Consumptions(BASE):
     CTime = Column(DateTime, primary_key=True, nullable=False)
     CTNo = Column(INTEGER, nullable=False)
     Consumptions = Column(FLOAT(10, 2))
+    PointsChange = Column(INTEGER)
 
 
 class Reservation(BASE):
