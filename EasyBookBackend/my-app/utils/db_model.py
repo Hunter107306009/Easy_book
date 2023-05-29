@@ -8,7 +8,9 @@ class Member(BASE):
     ID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     Name = Column(String(255), nullable=False)
     Phone = Column(String(20), nullable=False)
-    Password = Column(String(255), nullable=False)
+    Pwd = Column(String(255), nullable=False)
+    Gender = Column(String(20))
+    Birthday = Column(DateTime)
     MLevel = Column(INTEGER, nullable=False)
     MPoints = Column(INTEGER)
     AccumSpend = Column(FLOAT(10, 2))
@@ -17,7 +19,9 @@ class Member(BASE):
 class Alternate(BASE):
     __tablename__ = "ALTERNATE"
 
-    ALNO = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
+    ALNO = Column(
+        INTEGER, ForeignKey("RESERVATION.ReNumber"), primary_key=True, nullable=False
+    )
     ALRID = Column(INTEGER, primary_key=True, nullable=False)
     ALOrder = Column(INTEGER)
 
@@ -25,7 +29,7 @@ class Alternate(BASE):
 class BlackList(BASE):
     __tablename__ = "BLACKLIST"
 
-    BID = Column(INTEGER, primary_key=True, nullable=False)
+    BID = Column(INTEGER, ForeignKey("MEMBER.ID"), primary_key=True, nullable=False)
     BPhone = Column(String(20), primary_key=True, nullable=False)
     NonArriv = Column(INTEGER)
 
@@ -33,8 +37,8 @@ class BlackList(BASE):
 class Consumptions(BASE):
     __tablename__ = "CONSUMPTIONS"
 
-    CID = Column(INTEGER, primary_key=True, nullable=False)
-    CRID = Column(INTEGER, primary_key=True, nullable=False)
+    CID = Column(INTEGER, ForeignKey("MEMBER.ID"), primary_key=True, nullable=False)
+    CRID = Column(INTEGER, ForeignKey("SEATS.SRID"), primary_key=True, nullable=False)
     CTime = Column(DateTime, primary_key=True, nullable=False)
     CTNo = Column(INTEGER, nullable=False)
     Consumptions = Column(FLOAT(10, 2))
@@ -65,7 +69,9 @@ class Restaurant(BASE):
 class Seats(BASE):
     __tablename__ = "SEATS"
 
-    SRID = Column(INTEGER, primary_key=True, nullable=False)
+    SRID = Column(
+        INTEGER, ForeignKey("RESTAURANT.RID"), primary_key=True, nullable=False
+    )
     TNo = Column(INTEGER, primary_key=True, nullable=False)
     AttendToday = Column(INTEGER)
     Idle = Column(String(5))
