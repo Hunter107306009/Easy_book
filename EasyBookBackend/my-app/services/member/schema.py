@@ -10,3 +10,11 @@ class CreateMemberRequest(BaseModel):
     pwd: str
     gender: Optional[str] = None
     birthday: Optional[datetime.datetime] = None
+
+
+class UpdateMemberRequest(BaseModel):
+    ID: int
+    name: str
+    pwd: str
+    gender: Optional[str] = None
+    birthday: Optional[datetime.datetime] = None

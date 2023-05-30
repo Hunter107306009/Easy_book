@@ -18,3 +18,15 @@ async def create_member(
 @router.post("/login", summary="登入")
 async def login(phone: str, pwd: str, db: Session = Depends(get_db)):
     return await business.login(phone, pwd, db)
+
+
+@router.get("/get_member_info", summary="查詢會員資料")
+async def get_member_info(id: int, db: Session = Depends(get_db)):
+    return await business.get_member_info(id, db)
+
+
+@router.patch("/update_member", summary="修改會員資料")
+async def update_member(
+    updateMemberRequest: schema.UpdateMemberRequest, db: Session = Depends(get_db)
+):
+    return await business.update_member(updateMemberRequest, db)
