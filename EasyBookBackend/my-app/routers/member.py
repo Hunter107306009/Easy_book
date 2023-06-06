@@ -20,7 +20,7 @@ async def login(phone: str, pwd: str, db: Session = Depends(get_db)):
     return await business.login(phone, pwd, db)
 
 
-@router.get("/get_member_info", summary="查詢會員資料")
+@router.get("/get_member_info", summary="查詢會員基本資料")
 async def get_member_info(id: int, db: Session = Depends(get_db)):
     return await business.get_member_info(id, db)
 
@@ -30,3 +30,8 @@ async def update_member(
     updateMemberRequest: schema.UpdateMemberRequest, db: Session = Depends(get_db)
 ):
     return await business.update_member(updateMemberRequest, db)
+
+
+# @router.get("/get_member_level_info", summary="查詢會員等級資料")
+# async def get_member_level_info(id: int, db: Session = Depends(get_db)):
+#     return await business.get_member_level_info(id, db)

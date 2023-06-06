@@ -55,3 +55,12 @@ async def update_member(updateMemberRequest: schema.UpdateMemberRequest, db: Ses
         return Response.Success(data=None)
     else:
         return Response.Error(msg="更新失敗，查無此帳號資訊，請與相關人員聯絡～謝謝")
+
+
+# async def get_member_level_info(id: int, db: Session):
+#     member_level_info = await crud.get_account_level_info_by_ID(id, db)
+
+#     if member_level_info:
+#         return Response.Success(data=member_level_info)
+#     else:
+#         return Response.Error(msg="查無此帳號資訊，請與相關人員聯絡～謝謝")

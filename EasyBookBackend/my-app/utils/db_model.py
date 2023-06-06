@@ -1,5 +1,14 @@
 from utils.config import BASE
-from sqlalchemy import INTEGER, Column, DateTime, ForeignKey, String, FLOAT
+from sqlalchemy import (
+    INTEGER,
+    Column,
+    DateTime,
+    ForeignKey,
+    String,
+    FLOAT,
+    Text,
+    Index,
+)
 
 
 class Member(BASE):
@@ -13,67 +22,72 @@ class Member(BASE):
     Birthday = Column(DateTime)
     MLevel = Column(INTEGER, nullable=False)
     MPoints = Column(INTEGER)
-    AccumSpend = Column(FLOAT(10, 2))
-
-
-class Alternate(BASE):
-    __tablename__ = "ALTERNATE"
-
-    ALNO = Column(
-        INTEGER, ForeignKey("RESERVATION.ReNumber"), primary_key=True, nullable=False
-    )
-    ALRID = Column(INTEGER, primary_key=True, nullable=False)
-    ALOrder = Column(INTEGER)
-
-
-class BlackList(BASE):
-    __tablename__ = "BLACKLIST"
-
-    BID = Column(INTEGER, ForeignKey("MEMBER.ID"), primary_key=True, nullable=False)
-    BPhone = Column(String(20), primary_key=True, nullable=False)
-    NonArriv = Column(INTEGER)
-
-
-class Consumptions(BASE):
-    __tablename__ = "CONSUMPTIONS"
-
-    CID = Column(INTEGER, ForeignKey("MEMBER.ID"), primary_key=True, nullable=False)
-    CRID = Column(INTEGER, ForeignKey("SEATS.SRID"), primary_key=True, nullable=False)
-    CTime = Column(DateTime, primary_key=True, nullable=False)
-    CTNo = Column(INTEGER, nullable=False)
-    Consumptions = Column(FLOAT(10, 2))
-    PointsChange = Column(INTEGER)
-
-
-class Reservation(BASE):
-    __tablename__ = "RESERVATION"
-
-    ReNumber = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
-    ReRID = Column(INTEGER, primary_key=True, nullable=False)
-    RePhone = Column(String(20), nullable=False)
-    ResName = Column(String(255), nullable=False)
-    Reason = Column(String(255))
-    ReTime = Column(DateTime, nullable=False)
-    ReTNo = Column(INTEGER, nullable=False)
-    ReDate = Column(DateTime)
+    MAccumSpend = Column(FLOAT(10, 2))
 
 
 class Restaurant(BASE):
     __tablename__ = "RESTAURANT"
 
     RID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
-    RName = Column(String(255))
+    RName = Column(String(255), nullable=False)
     RPhone = Column(String(20), nullable=False)
     RAddress = Column(String(255))
+    RAccount = Column(String(100), nullable=False)
+    RPwd = Column(String(255), nullable=False)
+    URL = Column(Text)
 
 
 class Seats(BASE):
     __tablename__ = "SEATS"
 
-    SRID = Column(
+    RID = Column(
         INTEGER, ForeignKey("RESTAURANT.RID"), primary_key=True, nullable=False
     )
-    TNo = Column(INTEGER, primary_key=True, nullable=False)
-    AttendToday = Column(INTEGER)
-    Idle = Column(String(5))
+    TNo = Column(String(10), primary_key=True, nullable=False)
     Seats = Column(INTEGER)
+
+    Index("idx_tno", TNo)
+
+
+class SeatsRecord(BASE):
+    __tablename__ = "SEATSRECORD"
+
+    SRID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
+    RID = Column(INTEGER, ForeignKey("RESTAURANT.RID"), nullable=False)
+    TNo = Column(String(10), ForeignKey("SEATS.TNo"), nullable=False)
+    BookTime = Column(DateTime, nullable=False)
+    Is_Reserved = Column(String(1), nullable=False)
+
+
+class Reservation(BASE):
+    __tablename__ = "RESERVATION"
+
+    ReNumber = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
+    ReRID = Column(INTEGER, ForeignKey("RESTAURANT.RID"), nullable=False)
+    ReMID = Column(INTEGER, ForeignKey("MEMBER.ID"), nullable=False)
+    Reason = Column(String(255))
+    CreateTime = Column(DateTime, nullable=False)
+    ReTime = Column(DateTime, nullable=False)
+    ReTNo = Column(INTEGER, nullable=False)
+    RePerson = Column(INTEGER, nullable=False)
+    Consumptions = Column(INTEGER, nullable=False)
+    PointsChange = Column(INTEGER, nullable=False)
+
+
+class BlackList(BASE):
+    __tablename__ = "BLACKLIST"
+
+    BID = Column(INTEGER, ForeignKey("MEMBER.ID"), primary_key=True, nullable=False)
+    NonArrive = Column(INTEGER)
+
+
+class Alternate(BASE):
+    __tablename__ = "ALTERNATE"
+
+    ALNO = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
+    ALRID = Column(INTEGER, ForeignKey("RESTAURANT.RID"), nullable=False)
+    ALMID = Column(INTEGER, ForeignKey("MEMBER.ID"), nullable=False)
+    ALReason = Column(String(255))
+    ALCreateTime = Column(DateTime, nullable=False)
+    ALTime = Column(DateTime, nullable=False)
+    ALPerson = Column(INTEGER, nullable=False)

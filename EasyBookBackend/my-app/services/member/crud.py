@@ -1,4 +1,4 @@
-from utils.db_model import Member
+from utils.db_model import Member, Seats, Restaurant
 from sqlalchemy.orm.session import Session
 from services.member import schema
 import datetime
@@ -39,7 +39,7 @@ async def get_account_info_by_ID(id: int, db: Session):
             "Birthday": data[5],
             "MLevel": data[6],
             "MPoints": data[7],
-            "AccumSpend": data[8],
+            "MAccumSpend": data[8],
         }
         for data in db.query(
             Member.ID,
@@ -50,7 +50,7 @@ async def get_account_info_by_ID(id: int, db: Session):
             Member.Birthday,
             Member.MLevel,
             Member.MPoints,
-            Member.AccumSpend,
+            Member.MAccumSpend,
         )
         .filter(Member.ID == id)
         .all()
@@ -60,6 +60,44 @@ async def get_account_info_by_ID(id: int, db: Session):
         return member_info[0]
     else:
         return None
+
+
+# async def get_account_level_info_by_ID(id: int, db: Session):
+#     member_level_info = [
+#         {
+#             "ID": data[0],
+#             "Name": data[1],
+#             "MLevel": data[2],
+#             "MPoints": data[3],
+#             "AccumSpend": data[4],
+#             "CRID": data[5],
+#             "CTime": data[6],
+#             "CTNo": data[7],
+#             "Consumptions": data[8],
+#             "PointsChange": data[9],
+#         }
+#         for data in db.query(
+#             Member.ID,
+#             Member.Name,
+#             Member.MLevel,
+#             Member.MPoints,
+#             Member.AccumSpend,
+#             Consumptions.CRID,
+#             Consumptions.CTime,
+#             Consumptions.CTNo,
+#             Consumptions.Consumptions,
+#             Consumptions.PointsChange,
+#         )
+#         .filter(Member.ID == id)
+#         .join(Consumptions, Member.ID == Consumptions.CID)
+#         .join(Restaurant, Consumptions.CRID == Restaurant.RID)
+#         .all()
+#     ]
+
+#     if len(member_level_info) > 0:
+#         return member_level_info[0]
+#     else:
+#         return None
 
 
 async def create_member(hash_pwd, postRequest: schema.CreateMemberRequest, db: Session):
@@ -72,7 +110,7 @@ async def create_member(hash_pwd, postRequest: schema.CreateMemberRequest, db: S
             Birthday=postRequest.birthday,
             MLevel=1,
             MPoints=0,
-            AccumSpend=0,
+            MAccumSpend=0,
         )
     )
     db.commit()
