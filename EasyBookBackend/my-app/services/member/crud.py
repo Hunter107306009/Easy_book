@@ -1,7 +1,9 @@
-from utils.db_model import Member, Seats, Restaurant
+from utils.db_model import Member, Seats, Restaurant, Reservation
 from sqlalchemy.orm.session import Session
 from services.member import schema
 import datetime
+
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 async def get_account_info_for_login_signup(phone: str, db: Session):
@@ -62,44 +64,6 @@ async def get_account_info_by_ID(id: int, db: Session):
         return None
 
 
-# async def get_account_level_info_by_ID(id: int, db: Session):
-#     member_level_info = [
-#         {
-#             "ID": data[0],
-#             "Name": data[1],
-#             "MLevel": data[2],
-#             "MPoints": data[3],
-#             "AccumSpend": data[4],
-#             "CRID": data[5],
-#             "CTime": data[6],
-#             "CTNo": data[7],
-#             "Consumptions": data[8],
-#             "PointsChange": data[9],
-#         }
-#         for data in db.query(
-#             Member.ID,
-#             Member.Name,
-#             Member.MLevel,
-#             Member.MPoints,
-#             Member.AccumSpend,
-#             Consumptions.CRID,
-#             Consumptions.CTime,
-#             Consumptions.CTNo,
-#             Consumptions.Consumptions,
-#             Consumptions.PointsChange,
-#         )
-#         .filter(Member.ID == id)
-#         .join(Consumptions, Member.ID == Consumptions.CID)
-#         .join(Restaurant, Consumptions.CRID == Restaurant.RID)
-#         .all()
-#     ]
-
-#     if len(member_level_info) > 0:
-#         return member_level_info[0]
-#     else:
-#         return None
-
-
 async def create_member(hash_pwd, postRequest: schema.CreateMemberRequest, db: Session):
     db.add(
         Member(
@@ -128,3 +92,31 @@ async def update_member(
         }
     )
     db.commit()
+
+
+async def get_reservation_info_by_ID(id: int, db: Session):
+    reservation_info = [
+        {
+            "ReMID": data[0],
+            "RName": data[1],
+            "ReTime": datetime.datetime.strftime(data[2], DATETIME_FORMAT)
+            if data[2] is not None
+            else data[2],
+            "Consumptions": data[3],
+            "PointsChange": data[4],
+        }
+        for data in db.query(
+            Reservation.ReMID,
+            Restaurant.RName,
+            Reservation.ReTime,
+            Reservation.Consumptions,
+            Reservation.PointsChange,
+        )
+        .filter(Reservation.ReMID == id, Reservation.ReRID == Restaurant.RID)
+        .all()
+    ]
+
+    if len(reservation_info) > 0:
+        return reservation_info
+    else:
+        return None

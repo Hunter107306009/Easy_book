@@ -5,3 +5,29 @@ VALUES
 ('Apple', '0987654321', 'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','Female','2023-05-01', '1', '0', '0'),
 ('Alice', '0989898808', 'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae',null, '1987-06-15','1', '0', '0'),
 ('John', '0938674532', 'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','Male', '1970-10-10','1', '0', '0');
+
+INSERT INTO RESTAURANT
+(RName, RPhone, RAddress, RAccount, RPwd, URL)
+VALUES
+('Yummy','0223222322','台北市文山區','yummy','yummy1234','https://'),
+('Good','0212345678','新北市永和區','good','good1234','https://');
+
+
+INSERT INTO SEATS
+(RID, TNo, Seats)
+VALUES
+('1','A1','2'),
+('1','A2','2'),
+('1','A3','4'),
+('1','A4','4'),
+('2','A1','2'),
+('2','A2','2'),
+('2','A3','4'),
+('2','A4','4');
+
+
+INSERT INTO RESERVATION
+(ReRID, ReMID, Reason, CreateTime, ReTime, ReTNo, RePerson, Consumptions, PointsChange)
+VALUES
+('2','4','約會','2023-06-06 23:48:00','2023-06-06 23:55:00','A1','2','15000','150'),
+('1','4','聚餐','2023-06-06 23:48:00','2023-06-06 23:55:00','A3','4','1000','10');

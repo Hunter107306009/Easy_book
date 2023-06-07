@@ -68,7 +68,7 @@ class Reservation(BASE):
     Reason = Column(String(255))
     CreateTime = Column(DateTime, nullable=False)
     ReTime = Column(DateTime, nullable=False)
-    ReTNo = Column(INTEGER, nullable=False)
+    ReTNo = Column(String(10), nullable=False)
     RePerson = Column(INTEGER, nullable=False)
     Consumptions = Column(INTEGER, nullable=False)
     PointsChange = Column(INTEGER, nullable=False)

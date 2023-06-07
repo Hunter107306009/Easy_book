@@ -32,6 +32,6 @@ async def update_member(
     return await business.update_member(updateMemberRequest, db)
 
 
-# @router.get("/get_member_level_info", summary="查詢會員等級資料")
-# async def get_member_level_info(id: int, db: Session = Depends(get_db)):
-#     return await business.get_member_level_info(id, db)
+@router.get("/get_member_paypoints_info", summary="會員點數/消費紀錄查詢")
+async def get_member_paypoints_info(id: int, db: Session = Depends(get_db)):
+    return await business.get_member_paypoints_info(id, db)

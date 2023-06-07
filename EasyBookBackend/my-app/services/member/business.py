@@ -57,10 +57,18 @@ async def update_member(updateMemberRequest: schema.UpdateMemberRequest, db: Ses
         return Response.Error(msg="更新失敗，查無此帳號資訊，請與相關人員聯絡～謝謝")
 
 
-# async def get_member_level_info(id: int, db: Session):
-#     member_level_info = await crud.get_account_level_info_by_ID(id, db)
+async def get_member_paypoints_info(id: int, db: Session):
+    member_info = await crud.get_account_info_by_ID(id, db)
 
-#     if member_level_info:
-#         return Response.Success(data=member_level_info)
-#     else:
-#         return Response.Error(msg="查無此帳號資訊，請與相關人員聯絡～謝謝")
+    if not member_info:
+        return Response.Error(msg="尚未註冊或查無此帳號資訊，請與相關人員聯絡～謝謝")
+
+    reservation_info = await crud.get_reservation_info_by_ID(id, db)
+    member_list = {
+        "MLevel": member_info["MLevel"],
+        "MPoints": member_info["MPoints"],
+        "MAccumSpend": member_info["MAccumSpend"],
+        "Points_list": reservation_info,
+    }
+
+    return Response.Success(data=member_list)
