@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400&display=swap');
+
+#banner{
+	font-family: 'Noto Sans TC', sans-serif;
+	padding-top:10px;
+	padding-bottom:20px;
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	background-color:#FCFCFC;
+	height:10vh;
+	border-bottom: 0.5px solid #3C3C3C;
+}
+
+#title{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:40px;
+	font-weight:bold;
+	color:#FF6347;
+	margin-left:3vw;
+	margin-right:5vw;
+	user-select: none;
+}
+
+.index{
+	font-family: 'Noto Sans TC', sans-serif;
+	padding-top:5px;
+	font-size:20px;
+	margin-right:3vw;
+}
+
+.index:hover{
+	cursor:pointer;
+	font-family: 'Noto Sans TC', sans-serif;
+	padding-top:5px;
+	font-size:20px;
+	margin-right:3vw;
+	border-bottom:solid;
+	border-color:#FF6347;
+}
+
+#sign_in{
+	font-family: 'Noto Sans TC', sans-serif;
+	height:40px;
+	width:80px;
+	border-radius:10px;
+	border-style:none;
+	background-color:#FCFCFC;
+	color:#404040;
+	font-size:15px;
+}
+
+#sign_up{
+	font-family: 'Noto Sans TC', sans-serif;
+	height:40px;
+	width:80px;
+	border-radius:10px;
+	border-style:none;
+	background-color:#FF66CC;
+	color:#FCFCFC;
+	font-size:15px;
+}
+
+#sign_in:hover{
+	cursor:pointer;
+}
+
+#sign_up:hover{
+	cursor:pointer;
+}
+
+#bolck{
+	height:100px;
+	width:40vw;
+}
