@@ -1,5 +1,5 @@
 database:
   account: root
   password: root1234
-  address: 172.19.0.2:3306
+  address: 127.0.0.1:3308
   database: easy_book
