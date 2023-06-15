@@ -54,6 +54,7 @@ class SeatsRecord(BASE):
 
     SRID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
     RID = Column(INTEGER, ForeignKey("RESTAURANT.RID"), nullable=False)
+    Seats = Column(String(10), nullable=False)
     TNo = Column(String(10), ForeignKey("SEATS.TNo"), nullable=False)
     BookTime = Column(DateTime, nullable=False)
     Is_Reserved = Column(String(1), nullable=False)
@@ -70,8 +71,6 @@ class Reservation(BASE):
     ReTime = Column(DateTime, nullable=False)
     ReTNo = Column(String(10), nullable=False)
     RePerson = Column(INTEGER, nullable=False)
-    Consumptions = Column(INTEGER, nullable=False)
-    PointsChange = Column(INTEGER, nullable=False)
 
 
 class BlackList(BASE):
@@ -91,3 +90,14 @@ class Alternate(BASE):
     ALCreateTime = Column(DateTime, nullable=False)
     ALTime = Column(DateTime, nullable=False)
     ALPerson = Column(INTEGER, nullable=False)
+
+
+class Consumptions(BASE):
+    __tablename__ = "CONSUMPTIONS"
+
+    ID = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
+    CMID = Column(INTEGER, ForeignKey(Member.ID), nullable=False)
+    CRID = Column(INTEGER, ForeignKey(Restaurant.RID), nullable=False)
+    CTime = Column(DateTime, nullable=False)
+    Consumptions = Column(INTEGER, nullable=False)
+    PointsChange = Column(INTEGER, nullable=False)

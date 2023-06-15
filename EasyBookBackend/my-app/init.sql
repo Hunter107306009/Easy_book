@@ -27,7 +27,7 @@ VALUES
 
 
 INSERT INTO RESERVATION
-(ReRID, ReMID, Reason, CreateTime, ReTime, ReTNo, RePerson, Consumptions, PointsChange)
+(ReRID, ReMID, Reason, CreateTime, ReTime, ReTNo, RePerson)
 VALUES
-('2','4','約會','2023-06-06 23:48:00','2023-06-06 23:55:00','A1','2','15000','150'),
-('1','4','聚餐','2023-06-06 23:48:00','2023-06-06 23:55:00','A3','4','1000','10');
+('2','4','約會','2023-06-06 23:48:00','2023-06-06 23:55:00','A1','2'),
+('1','4','聚餐','2023-06-06 23:48:00','2023-06-06 23:55:00','A3','4');
