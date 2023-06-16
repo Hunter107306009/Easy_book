@@ -11,4 +11,8 @@ async def book(bookRequest: schema.BookRequest, db: Session):
     else:
         reservation_data = await crud.book_reservation(bookRequest, db)
         return Response.Success(data=reservation_data)
-    
+
+async def cancel_book(cancelRequest: schema.CancelRequest, db:Session):
+    cancel_data = await crud.cancel_reservation(cancelRequest,db)
+    return Response.Success(data=cancel_data)
+
