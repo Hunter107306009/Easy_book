@@ -7,6 +7,7 @@ from datetime import datetime
 
 
 async def check_blacklist(BID: int, db: Session):
+
     blacklist = db.query(BlackList).get(BID)
     if blacklist:
         return True
@@ -31,7 +32,7 @@ async def check_reservation_exists(ID:int,RID: int, ReTime: datetime.time, db: S
 async def book_reservation(postRequest: schema.BookRequest, db = Session):
     seats = None 
   
-    if postRequest.Person <= 2:
+    if  postRequest.Person <= 2:
         seats = "2"
     elif 3<= postRequest.Person <= 4:
         seats = "4"
@@ -77,7 +78,7 @@ async def book_reservation(postRequest: schema.BookRequest, db = Session):
     # 更新座位紀錄為已預訂
     seats_record = db.query(SeatsRecord).filter_by(
     RID=postRequest.RID,
-    Seats=str(postRequest.Person),
+    Seats=seats,
     TNo=tno,
     BookTime=postRequest.ReTime,
     Is_Reserved="F"
@@ -106,7 +107,7 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
     ).first()
 
     if not reservation:
-        raise HTTPException(status_code=404, detail="尚無此訂位！")
+        raise HTTPException(status_code=400, detail="尚無此訂位！")
 
     current_date = datetime.now().date()
 
