@@ -12,4 +12,8 @@ class BookRequest(BaseModel):
     ReTime:datetime.datetime 
     Person: int  
 
+class CancelRequest(BaseModel):
+    ID:int
+    RID: int
+    ReNumber:int
 
