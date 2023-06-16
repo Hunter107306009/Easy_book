@@ -3,17 +3,20 @@ import datetime
 from pydantic.main import BaseModel
 from typing import Optional
 
+
 class BookRequest(BaseModel):
-    ID:int
+    ID: int
     RID: int
     Name: str
     Phone: str
     Reason: str
-    ReTime:datetime.datetime 
-    Person: int  
+    ReTime: datetime.datetime
+    Person: int
+
 
 class CancelRequest(BaseModel):
-    ID:int
+    ReNumber: int
+    ID: int
     RID: int
-    ReNumber:int
-
+    BookTime: datetime.datetime
+    CTNo: str

@@ -112,4 +112,12 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
     db.delete(reservation)
     db.commit()
 
+    # 更新座位動態表
+    db.query(SeatsRecord).filter(
+        SeatsRecord.RID == cancel_request.RID,
+        SeatsRecord.BookTime == cancel_request.BookTime,
+        SeatsRecord.TNo == cancel_request.CTNo,
+    ).update({"Is_Reserved": "F"})
+    db.commit()
+
     return {"code": 200, "data": "取消成功"}
