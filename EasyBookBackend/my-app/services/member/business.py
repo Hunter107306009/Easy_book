@@ -58,7 +58,7 @@ async def update_member(updateMemberRequest: schema.UpdateMemberRequest, db: Ses
 
 
 async def get_member_paypoints_info(id: int, db: Session):
-    member_info = await crud.get_account_info_by_ID(ID, db)
+    member_info = await crud.get_account_info_by_ID(id, db)
 
     if not member_info:
         return Response.Error(msg="尚未註冊或查無此帳號資訊，請與相關人員聯絡～謝謝")
