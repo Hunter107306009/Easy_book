@@ -1,4 +1,4 @@
-from utils.db_model import Member, Seats, Restaurant, Reservation
+from utils.db_model import Member, Seats, Restaurant, Reservation, Consumptions
 from sqlalchemy.orm.session import Session
 from services.member import schema
 import datetime
@@ -94,21 +94,25 @@ async def update_member(
     db.commit()
 
 
-async def get_reservation_info_by_ID(id: int, db: Session):
+async def get_consumption_info_by_ID(id: int, db: Session):
     reservation_info = [
         {
-            "ReMID": data[0],
-            "RName": data[1],
-            "ReTime": datetime.datetime.strftime(data[2], DATETIME_FORMAT)
+            "MemberID": data[0],
+            "RestaurantName": data[1],
+            "CTime": datetime.datetime.strftime(data[2], DATETIME_FORMAT)
             if data[2] is not None
             else data[2],
+            "Consumptions": data[3],
+            "PointsChange": data[4],
         }
         for data in db.query(
-            Reservation.ReMID,
+            Consumptions.CMID,
             Restaurant.RName,
-            Reservation.ReTime,
+            Consumptions.CTime,
+            Consumptions.Consumptions,
+            Consumptions.PointsChange,
         )
-        .filter(Reservation.ReMID == id, Reservation.ReRID == Restaurant.RID)
+        .filter(Consumptions.CMID == id, Consumptions.CRID == Restaurant.RID)
         .all()
     ]
 

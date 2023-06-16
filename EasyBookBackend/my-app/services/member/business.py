@@ -63,12 +63,12 @@ async def get_member_paypoints_info(id: int, db: Session):
     if not member_info:
         return Response.Error(msg="尚未註冊或查無此帳號資訊，請與相關人員聯絡～謝謝")
 
-    reservation_info = await crud.get_reservation_info_by_ID(id, db)
+    consumption_info = await crud.get_consumption_info_by_ID(id, db)
     member_list = {
         "MLevel": member_info["MLevel"],
         "MPoints": member_info["MPoints"],
         "MAccumSpend": member_info["MAccumSpend"],
-        "Points_list": reservation_info,
+        "Points_list": consumption_info,
     }
 
     return Response.Success(data=member_list)
