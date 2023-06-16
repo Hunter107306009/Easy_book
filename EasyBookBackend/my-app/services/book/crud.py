@@ -97,3 +97,27 @@ async def book_reservation(postRequest: schema.BookRequest, db = Session):
             "numbers":  tno
         }
     }
+
+async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
+    reservation = db.query(Reservation).filter(
+        Reservation.ReRID == cancel_request.RID,
+        Reservation.ReMID == cancel_request.ID,
+        Reservation.ReNumber == cancel_request.ReNumber
+    ).first()
+
+    if not reservation:
+        raise HTTPException(status_code=404, detail="尚無此訂位！")
+
+    current_date = datetime.now().date()
+
+    if reservation.ReTime.date() < current_date:
+        raise HTTPException(status_code=200, detail="不能取消訂位")
+
+    db.delete(reservation)
+    db.commit()
+
+    return {
+        "code": 200,
+        "message": "Success",
+        "data": "取消成功"
+    }
