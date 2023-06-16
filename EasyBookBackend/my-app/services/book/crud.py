@@ -92,10 +92,9 @@ async def book_reservation(postRequest: schema.BookRequest, db = Session):
     db.commit()
     return {
         "code": 200,
-        "message": "Success",
         "data": {
             "data": "訂位成功",
-            "numbers":  tno
+            "桌號":  tno
         }
     }
 
@@ -119,6 +118,5 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
 
     return {
         "code": 200,
-        "message": "Success",
         "data": "取消成功"
     }
