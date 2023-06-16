@@ -11,3 +11,8 @@ class CreateRestaurantRequest(BaseModel):
     RPhone: str
     RAddress: Optional[str] = None
     Url: str
+
+
+class RestaurantLoginRequest(BaseModel):
+    RAccount: str
+    Rpwd: str

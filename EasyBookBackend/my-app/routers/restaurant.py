@@ -13,3 +13,10 @@ async def create_restaurant(
     db: Session = Depends(get_db),
 ):
     return await business.create_restaurant(createRestaurantRequest, db)
+
+
+@router.post("/restaurant_login", summary="餐廳登入")
+async def restaurant_login(
+    restaurantLoginRequest: schema.RestaurantLoginRequest, db: Session = Depends(get_db)
+):
+    return await business.restaurant_login(restaurantLoginRequest, db)

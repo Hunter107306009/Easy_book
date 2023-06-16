@@ -23,3 +23,19 @@ async def create_restaurant(
         await crud.create_restaurant_seats_record(account_info["RID"], db)
 
         return Response.Success(data=None)
+
+
+async def restaurant_login(
+    restaurantLoginRequest: schema.RestaurantLoginRequest, db: Session
+):
+    restaurant_info = await crud.get_account_info_by_account(
+        restaurantLoginRequest.RAccount, db
+    )
+
+    if restaurant_info:
+        if restaurant_info["RPwd"] == restaurantLoginRequest.Rpwd:
+            return Response.Success(data=restaurant_info)
+        else:
+            return Response.Error(msg="密碼錯誤，請重新輸入。")
+    else:
+        return Response.Error(msg="此帳號尚未註冊，請重新確認或前往註冊。")
