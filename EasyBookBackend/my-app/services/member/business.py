@@ -17,10 +17,10 @@ async def create_member(createMemberRequest: schema.CreateMemberRequest, db: Ses
         return Response.Error(msg="此手機號碼已註冊過，請直接登入，謝謝")
 
 
-async def login(phone: str, pwd: str, db: Session):
+async def login(loginRequest: schema.LoginRequest, db: Session):
     # 查詢是否有此phone的會員資料
-    account_info = await crud.get_account_info_for_login_signup(phone, db)
-    hash_pwd = sha_256(pwd)
+    account_info = await crud.get_account_info_for_login_signup(loginRequest.phone, db)
+    hash_pwd = sha_256(loginRequest.pwd)
 
     if account_info:
         if hash_pwd != account_info["Pwd"]:
@@ -58,7 +58,7 @@ async def update_member(updateMemberRequest: schema.UpdateMemberRequest, db: Ses
 
 
 async def get_member_paypoints_info(id: int, db: Session):
-    member_info = await crud.get_account_info_by_ID(id, db)
+    member_info = await crud.get_account_info_by_ID(ID, db)
 
     if not member_info:
         return Response.Error(msg="尚未註冊或查無此帳號資訊，請與相關人員聯絡～謝謝")

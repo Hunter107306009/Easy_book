@@ -16,8 +16,8 @@ async def create_member(
 
 
 @router.post("/login", summary="登入")
-async def login(phone: str, pwd: str, db: Session = Depends(get_db)):
-    return await business.login(phone, pwd, db)
+async def login(loginRequest: schema.LoginRequest, db: Session = Depends(get_db)):
+    return await business.login(loginRequest, db)
 
 
 @router.get("/get_member_info", summary="查詢會員基本資料")
@@ -34,4 +34,4 @@ async def update_member(
 
 @router.get("/get_member_paypoints_info", summary="會員點數/消費紀錄查詢")
 async def get_member_paypoints_info(id: int, db: Session = Depends(get_db)):
-    return await business.get_member_paypoints_info(id, db)
+    return await business.get_member_paypoicnts_info(id, db)

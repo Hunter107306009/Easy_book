@@ -18,3 +18,8 @@ class UpdateMemberRequest(BaseModel):
     pwd: str
     gender: Optional[str] = None
     birthday: Optional[datetime.datetime] = None
+
+
+class LoginRequest(BaseModel):
+    phone: str
+    pwd: str
