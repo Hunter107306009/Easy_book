@@ -385,33 +385,47 @@ async def get_restaurant_info_by_ID(RID: int, db: Session):
     else:
         return None
 
-def check_seats_availability(RID: int, Date: str, People: int, db: Session):
+def check_seats_availability(RID: int, Date: str, Person: int, db: Session):
     start_time = datetime.strptime(str(Date), "%Y-%m-%d").replace(hour=0, minute=0, second=0)
     end_time = start_time + timedelta(days=1)
 
+
+    seats = None
+
+    if Person <= 2:
+        seats = "2"
+    elif 3 <= Person <= 4:
+        seats = "4"
+    elif 5 <= Person <= 6:
+        seats = "6"
+
     seats_records = (
-        db.query(SeatsRecord.BookTime, SeatsRecord.TNo, SeatsRecord.Is_Reserved)
+        db.query(SeatsRecord.BookTime, SeatsRecord.Is_Reserved)
         .filter(
             SeatsRecord.RID == RID,
             SeatsRecord.BookTime >= start_time,
             SeatsRecord.BookTime < end_time,
-            SeatsRecord.Seats == str(People)
+            SeatsRecord.Seats == seats
         )
         .all()
     )
 
     availability = []
     time_slots = set()
+
+
     for record in seats_records:
         time_slot = record.BookTime.strftime("%H:%M")
+        
+        if any(slot["time_slot"] == time_slot for slot in availability):
+            continue
+        
         time_slots.add(time_slot)
 
-        if any(slot["time_slot"] == time_slot and not slot["available"] for slot in availability):
-            continue
-
-        if record.Is_Reserved == "Y":
-            availability.append({"time_slot": time_slot, "available": False})
-        else:
+        if record.Is_Reserved == "F":
             availability.append({"time_slot": time_slot, "available": True})
+        else:
+            availability.append({"time_slot": time_slot, "available": False})
 
     return availability
+
