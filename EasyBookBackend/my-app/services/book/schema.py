@@ -16,10 +16,6 @@ class BookRequest(BaseModel):
 
 class CancelRequest(BaseModel):
     ReNumber: int
-    ID: int
-    RID: int
-    BookTime: datetime.datetime
-    CTNo: str
 
 
 class UpdateBookRequest(BaseModel):

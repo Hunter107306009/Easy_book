@@ -94,32 +94,34 @@ async def book_reservation(postRequest: schema.BookRequest, db=Session):
 
 
 async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
-    reservation = (
-        db.query(Reservation)
-        .filter(
-            Reservation.ReRID == cancel_request.RID,
-            Reservation.ReMID == cancel_request.ID,
-            Reservation.ReNumber == cancel_request.ReNumber,
+    reservation = [
+        {"ReNumber": data[0], "ReRID": data[1], "ReTime": data[2], "ReTNo": data[3]}
+        for data in db.query(
+            Reservation.ReNumber,
+            Reservation.ReRID,
+            Reservation.ReTime,
+            Reservation.ReTNo,
         )
-        .first()
-    )
+        .filter(Reservation.ReNumber == cancel_request.ReNumber)
+        .all()
+    ]
 
     if not reservation:
         raise HTTPException(status_code=400, detail="尚無此訂位！")
 
-    current_date = datetime.now().date()
-
-    if reservation.ReTime.date() < current_date:
+    if reservation[0]["ReTime"] < datetime.now():
         raise HTTPException(status_code=400, detail="不能取消訂位")
 
-    db.delete(reservation)
+    db.query(Reservation).filter(
+        Reservation.ReNumber == cancel_request.ReNumber,
+    ).delete()
     db.commit()
 
     # 更新座位動態表
     db.query(SeatsRecord).filter(
-        SeatsRecord.RID == cancel_request.RID,
-        SeatsRecord.BookTime == cancel_request.BookTime,
-        SeatsRecord.TNo == cancel_request.CTNo,
+        SeatsRecord.RID == reservation[0]["ReRID"],
+        SeatsRecord.BookTime == reservation[0]["ReTime"],
+        SeatsRecord.TNo == reservation[0]["ReTNo"],
     ).update({"Is_Reserved": "F"})
     db.commit()
 
@@ -257,22 +259,27 @@ async def get_reservation_info_by_MemberID(memberid: int, db: Session):
             "ReNumber": data[0],
             "MemberID": data[1],
             "RID": data[2],
-            "ReTime": datetime.strftime(data[3], DATETIME_FORMAT)
-            if data[3] is not None
-            else data[3],
-            "ReTNo": data[4],
-            "RePerson": data[5],
-            "Reason": data[6],
+            "RName": data[3],
+            "RURL": data[4],
+            "ReTime": datetime.strftime(data[5], DATETIME_FORMAT)
+            if data[5] is not None
+            else data[5],
+            "ReTNo": data[6],
+            "RePerson": data[7],
+            "Reason": data[8],
         }
         for data in db.query(
             Reservation.ReNumber,
             Reservation.ReMID,
             Reservation.ReRID,
+            Restaurant.RName,
+            Restaurant.URL,
             Reservation.ReTime,
             Reservation.ReTNo,
             Reservation.RePerson,
             Reservation.Reason,
         )
+        .join(Restaurant, Reservation.ReRID == Restaurant.RID)
         .filter(Reservation.ReMID == memberid)
         .all()
     ]
