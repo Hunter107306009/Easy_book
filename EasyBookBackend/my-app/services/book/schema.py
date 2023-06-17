@@ -20,3 +20,12 @@ class CancelRequest(BaseModel):
     RID: int
     BookTime: datetime.datetime
     CTNo: str
+
+
+class UpdateBookRequest(BaseModel):
+    ReNumber: int
+    ID: int
+    RID: int
+    BookTime: datetime.datetime
+    Person: int
+    Reason: str
