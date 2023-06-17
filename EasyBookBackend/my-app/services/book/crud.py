@@ -1,9 +1,12 @@
 from services.book import schema
 from sqlalchemy.orm.session import Session
-from utils.db_model import Reservation, Seats, SeatsRecord, BlackList
+from utils.db_model import Reservation, Member, SeatsRecord, BlackList, Restaurant
 import datetime
 from fastapi import FastAPI, HTTPException
 from datetime import datetime
+
+
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 async def check_blacklist(BID: int, db: Session):
@@ -87,7 +90,7 @@ async def book_reservation(postRequest: schema.BookRequest, db=Session):
     ).update({"Is_Reserved": "Y"})
 
     db.commit()
-    return {"code": 200, "data": {"data": "訂位成功", "桌號": tno}}
+    return {"code": 200, "data": {"message": "訂位成功", "桌號": tno}}
 
 
 async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
@@ -107,7 +110,7 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
     current_date = datetime.now().date()
 
     if reservation.ReTime.date() < current_date:
-        raise HTTPException(status_code=200, detail="不能取消訂位")
+        raise HTTPException(status_code=400, detail="不能取消訂位")
 
     db.delete(reservation)
     db.commit()
@@ -246,3 +249,99 @@ async def update_reservation(
             }
         )
         db.commit()
+
+
+async def get_reservation_info_by_MemberID(memberid: int, db: Session):
+    reservation_list = [
+        {
+            "ReNumber": data[0],
+            "MemberID": data[1],
+            "RID": data[2],
+            "ReTime": datetime.strftime(data[3], DATETIME_FORMAT)
+            if data[3] is not None
+            else data[3],
+            "ReTNo": data[4],
+            "RePerson": data[5],
+            "Reason": data[6],
+        }
+        for data in db.query(
+            Reservation.ReNumber,
+            Reservation.ReMID,
+            Reservation.ReRID,
+            Reservation.ReTime,
+            Reservation.ReTNo,
+            Reservation.RePerson,
+            Reservation.Reason,
+        )
+        .filter(Reservation.ReMID == memberid)
+        .all()
+    ]
+
+    if reservation_list:
+        return reservation_list
+    else:
+        return None
+
+
+async def get_reservation_info_by_RID(RID: int, db: Session):
+    reservation_list = [
+        {
+            "ReNumber": data[0],
+            "MemberID": data[1],
+            "RID": data[2],
+            "ReTime": datetime.strftime(data[3], DATETIME_FORMAT)
+            if data[3] is not None
+            else data[3],
+            "ReTNo": data[4],
+            "RePerson": data[5],
+            "Reason": data[6],
+        }
+        for data in db.query(
+            Reservation.ReNumber,
+            Reservation.ReMID,
+            Reservation.ReRID,
+            Reservation.ReTime,
+            Reservation.ReTNo,
+            Reservation.RePerson,
+            Reservation.Reason,
+        )
+        .filter(Reservation.ReRID == RID)
+        .all()
+    ]
+
+    if reservation_list:
+        return reservation_list
+    else:
+        return None
+
+
+async def get_account_info_by_ID(id: int, db: Session):
+    member_info = [
+        {"ID": data[0]}
+        for data in db.query(
+            Member.ID,
+        )
+        .filter(Member.ID == id)
+        .all()
+    ]
+
+    if len(member_info) > 0:
+        return member_info[0]
+    else:
+        return None
+
+
+async def get_restaurant_info_by_ID(RID: int, db: Session):
+    restaurant_info = [
+        {"RID": data[0]}
+        for data in db.query(
+            Restaurant.RID,
+        )
+        .filter(Restaurant.RID == RID)
+        .all()
+    ]
+
+    if len(restaurant_info) > 0:
+        return restaurant_info[0]
+    else:
+        return None

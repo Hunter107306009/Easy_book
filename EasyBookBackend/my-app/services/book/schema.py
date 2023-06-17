@@ -29,3 +29,11 @@ class UpdateBookRequest(BaseModel):
     BookTime: datetime.datetime
     Person: int
     Reason: str
+
+
+class QueryMemberRequest(BaseModel):
+    MemberID: int
+
+
+class QueryRestaurantRequest(BaseModel):
+    RID: int
