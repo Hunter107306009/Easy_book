@@ -1,6 +1,7 @@
 from services.book import crud, schema
 from sqlalchemy.orm.session import Session
 from utils.response import Response
+from datetime import date
 
 
 async def book(bookRequest: schema.BookRequest, db: Session):
