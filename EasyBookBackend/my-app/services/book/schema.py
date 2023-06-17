@@ -1,5 +1,6 @@
 import re
 import datetime
+from datetime import date
 from pydantic.main import BaseModel
 from typing import Optional
 
