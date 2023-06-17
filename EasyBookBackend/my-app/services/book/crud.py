@@ -5,6 +5,7 @@ import datetime
 from fastapi import FastAPI, HTTPException
 from datetime import datetime,timedelta
 from typing import List, Dict
+from collections import defaultdict
 
 
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -385,10 +386,10 @@ async def get_restaurant_info_by_ID(RID: int, db: Session):
     else:
         return None
 
+
 def check_seats_availability(RID: int, Date: str, Person: int, db: Session):
     start_time = datetime.strptime(str(Date), "%Y-%m-%d").replace(hour=0, minute=0, second=0)
     end_time = start_time + timedelta(days=1)
-
 
     seats = None
 
@@ -411,21 +412,18 @@ def check_seats_availability(RID: int, Date: str, Person: int, db: Session):
     )
 
     availability = []
-    time_slots = set()
-
+    time_slots = defaultdict(lambda: {"time_slot": None, "available": False})
 
     for record in seats_records:
         time_slot = record.BookTime.strftime("%H:%M")
-        
-        if any(slot["time_slot"] == time_slot for slot in availability):
-            continue
-        
-        time_slots.add(time_slot)
 
         if record.Is_Reserved == "F":
-            availability.append({"time_slot": time_slot, "available": True})
-        else:
-            availability.append({"time_slot": time_slot, "available": False})
+            time_slots[time_slot]["available"] = True
+
+        time_slots[time_slot]["time_slot"] = time_slot
+
+    availability = list(time_slots.values())
 
     return availability
+
 
