@@ -87,3 +87,7 @@ async def query_book_restaurant(RID: int, db: Session):
             return Response.Success(data=[])
     else:
         return Response.Error(msg="查無此餐廳資訊")
+
+async def check_seats(RID:int,ReDate:str,Person:int, db: Session):
+    check_seats_info = crud.check_seats_availability(RID,ReDate,Person,db)
+    return Response.Success(data=check_seats_info)
