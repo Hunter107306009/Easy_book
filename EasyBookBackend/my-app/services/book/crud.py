@@ -258,19 +258,23 @@ async def get_reservation_info_by_MemberID(memberid: int, db: Session):
         {
             "ReNumber": data[0],
             "MemberID": data[1],
-            "RID": data[2],
-            "RName": data[3],
-            "RURL": data[4],
-            "ReTime": datetime.strftime(data[5], DATETIME_FORMAT)
-            if data[5] is not None
-            else data[5],
-            "ReTNo": data[6],
-            "RePerson": data[7],
-            "Reason": data[8],
+            "MName": data[2],
+            "MPhone": data[3],
+            "RID": data[4],
+            "RName": data[5],
+            "RURL": data[6],
+            "ReTime": datetime.strftime(data[7], DATETIME_FORMAT)
+            if data[7] is not None
+            else data[7],
+            "ReTNo": data[8],
+            "RePerson": data[9],
+            "Reason": data[10],
         }
         for data in db.query(
             Reservation.ReNumber,
             Reservation.ReMID,
+            Member.Name,
+            Member.Phone,
             Reservation.ReRID,
             Restaurant.RName,
             Restaurant.URL,
@@ -280,6 +284,7 @@ async def get_reservation_info_by_MemberID(memberid: int, db: Session):
             Reservation.Reason,
         )
         .join(Restaurant, Reservation.ReRID == Restaurant.RID)
+        .join(Member, Reservation.ReMID == Member.ID)
         .filter(Reservation.ReMID == memberid)
         .all()
     ]
@@ -295,23 +300,33 @@ async def get_reservation_info_by_RID(RID: int, db: Session):
         {
             "ReNumber": data[0],
             "MemberID": data[1],
-            "RID": data[2],
-            "ReTime": datetime.strftime(data[3], DATETIME_FORMAT)
-            if data[3] is not None
-            else data[3],
-            "ReTNo": data[4],
-            "RePerson": data[5],
-            "Reason": data[6],
+            "MName": data[2],
+            "MPhone": data[3],
+            "RID": data[4],
+            "RName": data[5],
+            "RURL": data[6],
+            "ReTime": datetime.strftime(data[7], DATETIME_FORMAT)
+            if data[7] is not None
+            else data[7],
+            "ReTNo": data[8],
+            "RePerson": data[9],
+            "Reason": data[10],
         }
         for data in db.query(
             Reservation.ReNumber,
             Reservation.ReMID,
+            Member.Name,
+            Member.Phone,
             Reservation.ReRID,
+            Restaurant.RName,
+            Restaurant.URL,
             Reservation.ReTime,
             Reservation.ReTNo,
             Reservation.RePerson,
             Reservation.Reason,
         )
+        .join(Restaurant, Reservation.ReRID == Restaurant.RID)
+        .join(Member, Reservation.ReMID == Member.ID)
         .filter(Reservation.ReRID == RID)
         .all()
     ]
