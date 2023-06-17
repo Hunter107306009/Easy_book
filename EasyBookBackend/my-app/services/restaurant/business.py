@@ -122,10 +122,19 @@ async def add_consumption_record(
         AddConsumptionRecordRequest.Phone, db
     )
 
-    if Is_member:
-        consumption_record = await crud.add_consumption_record(
+    Is_restaurant = await crud.get_restaurant_info(AddConsumptionRecordRequest.RID, db)
+
+    if Is_member and Is_restaurant:
+        points_info = await crud.add_consumption_record(
             Is_member["ID"], AddConsumptionRecordRequest, db
         )
+
+        member_level_info = await crud.get_member_info_by_id(Is_member["ID"], db)
+
+        await crud.update_member_points(member_level_info, points_info, db)
+
         return Response.Success(data=None)
-    else:
+    elif not Is_member:
         return Response.Error(msg="查無此會員資訊")
+    elif not Is_restaurant:
+        return Response.Error(msg="查無此餐廳資訊")

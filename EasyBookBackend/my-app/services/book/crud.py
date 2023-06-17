@@ -93,7 +93,7 @@ async def book_reservation(postRequest: schema.BookRequest, db=Session):
     return {"code": 200, "data": {"message": "訂位成功", "桌號": tno}}
 
 
-async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
+async def cancel_reservation(ReNumber: int, db: Session):
     reservation = [
         {"ReNumber": data[0], "ReRID": data[1], "ReTime": data[2], "ReTNo": data[3]}
         for data in db.query(
@@ -102,7 +102,7 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
             Reservation.ReTime,
             Reservation.ReTNo,
         )
-        .filter(Reservation.ReNumber == cancel_request.ReNumber)
+        .filter(Reservation.ReNumber == ReNumber)
         .all()
     ]
 
@@ -113,7 +113,7 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
         raise HTTPException(status_code=400, detail="不能取消訂位")
 
     db.query(Reservation).filter(
-        Reservation.ReNumber == cancel_request.ReNumber,
+        Reservation.ReNumber == ReNumber,
     ).delete()
     db.commit()
 

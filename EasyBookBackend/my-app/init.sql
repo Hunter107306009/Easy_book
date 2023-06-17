@@ -9,8 +9,8 @@ VALUES
 INSERT INTO RESTAURANT
 (RName, RPhone, RAddress, RAccount, RPwd, URL)
 VALUES
-('Yummy','0223222322','台北市文山區','yummy','yummy1234','https://'),
-('Good','0212345678','新北市永和區','good','good1234','https://');
+('Yummy','0223222322','台北市文山區','yummy','4359dbe2796b11d2c9c214a5d3a9b505db2ad679254d3f4fad30baf44e6e2944','https://'),
+('Good','0212345678','新北市永和區','good','42a99bd1f0f175a03f3f45af820cdfdcbaca8dcd457ed5401d1d5ac1319be374','https://');
 
 
 INSERT INTO SEATS
@@ -33,5 +33,5 @@ VALUES
 INSERT INTO RESERVATION
 (ReRID, ReMID, Reason, CreateTime, ReTime, ReTNo, RePerson)
 VALUES
-('2','4','約會','2023-06-06 23:48:00','2023-06-06 23:55:00','A1','2'),
-('1','4','聚餐','2023-06-06 23:48:00','2023-06-06 23:55:00','B1','4');
+('2','4','約會','2023-06-06 23:48:00','2023-06-06 12:00:00','A1','2'),
+('1','4','聚餐','2023-06-06 23:48:00','2023-06-15 18:00:00','B1','4');

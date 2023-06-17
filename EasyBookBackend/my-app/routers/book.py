@@ -15,10 +15,8 @@ async def book(bookRequest: schema.BookRequest, db: Session = Depends(get_db)):
 
 
 @router.delete("/cancel_book", summary="取消訂位")
-async def cancel_book(
-    cancelRequest: schema.CancelRequest, db: Session = Depends(get_db)
-):
-    return await business.cancel_book(cancelRequest, db)
+async def cancel_book(ReNumber: int, db: Session = Depends(get_db)):
+    return await business.cancel_book(ReNumber, db)
 
 
 @router.patch("/update_book", summary="修改訂位")

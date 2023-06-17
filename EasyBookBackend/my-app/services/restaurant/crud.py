@@ -289,6 +289,39 @@ async def add_consumption_record(
     )
     db.commit()
 
+    points_info = {
+        "ID": memberID,
+        "Consumptions": AddConsumptionRecordRequest.Consumptions,
+        "PointsChange": AddConsumptionRecordRequest.Consumptions // 100,
+    }
+    return points_info
+
+
+async def get_member_info_by_id(id: int, db: Session):
+    member_info = [
+        {"ID": data[0], "MLevel": data[1], "MPoints": data[2], "MAccumSpend": data[3]}
+        for data in db.query(
+            Member.ID, Member.MLevel, Member.MPoints, Member.MAccumSpend
+        )
+        .filter(Member.ID == id)
+        .all()
+    ]
+
+    return member_info[0]
+
+
+async def update_member_points(member_level_info: dict, points_info: dict, db: Session):
+    db.query(Member).filter(
+        Member.ID == points_info["ID"],
+    ).update(
+        {
+            "MAccumSpend": member_level_info["MAccumSpend"]
+            + points_info["Consumptions"],
+            "MPoints": member_level_info["MPoints"] + points_info["PointsChange"],
+        }
+    )
+    db.commit()
+
 
 async def get_member_info_by_phone(phone: str, db: Session):
     member_info = [

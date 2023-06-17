@@ -14,10 +14,6 @@ class BookRequest(BaseModel):
     Person: int
 
 
-class CancelRequest(BaseModel):
-    ReNumber: int
-
-
 class UpdateBookRequest(BaseModel):
     ReNumber: int
     ID: int
