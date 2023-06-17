@@ -24,6 +24,10 @@ class UpdateBookRequest(BaseModel):
 class QueryMemberRequest(BaseModel):
     MemberID: int
 
+class CheckSeatsRequest(BaseModel):
+    RID: int
+    BookTime: date
+    Person: int
 
 class QueryRestaurantRequest(BaseModel):
     RID: int
