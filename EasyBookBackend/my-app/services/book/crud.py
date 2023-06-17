@@ -386,7 +386,6 @@ async def get_restaurant_info_by_ID(RID: int, db: Session):
     else:
         return None
 
-
 def check_seats_availability(RID: int, Date: date, Person: int, db: Session):
     start_time = datetime.combine(Date, datetime.min.time())
     end_time = start_time + timedelta(days=1)
