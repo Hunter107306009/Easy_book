@@ -3,7 +3,8 @@ from sqlalchemy.orm.session import Session
 from utils.db_model import Reservation, Member, SeatsRecord, BlackList, Restaurant
 import datetime
 from fastapi import FastAPI, HTTPException
-from datetime import datetime
+from datetime import datetime,timedelta
+from typing import List, Dict
 
 
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -383,3 +384,34 @@ async def get_restaurant_info_by_ID(RID: int, db: Session):
         return restaurant_info[0]
     else:
         return None
+
+def check_seats_availability(RID: int, Date: str, People: int, db: Session):
+    start_time = datetime.strptime(str(Date), "%Y-%m-%d").replace(hour=0, minute=0, second=0)
+    end_time = start_time + timedelta(days=1)
+
+    seats_records = (
+        db.query(SeatsRecord.BookTime, SeatsRecord.TNo, SeatsRecord.Is_Reserved)
+        .filter(
+            SeatsRecord.RID == RID,
+            SeatsRecord.BookTime >= start_time,
+            SeatsRecord.BookTime < end_time,
+            SeatsRecord.Seats == str(People)
+        )
+        .all()
+    )
+
+    availability = []
+    time_slots = set()
+    for record in seats_records:
+        time_slot = record.BookTime.strftime("%H:%M")
+        time_slots.add(time_slot)
+
+        if any(slot["time_slot"] == time_slot and not slot["available"] for slot in availability):
+            continue
+
+        if record.Is_Reserved == "Y":
+            availability.append({"time_slot": time_slot, "available": False})
+        else:
+            availability.append({"time_slot": time_slot, "available": True})
+
+    return availability
