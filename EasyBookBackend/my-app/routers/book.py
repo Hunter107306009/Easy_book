@@ -4,7 +4,7 @@ from fastapi.params import Depends
 from utils.db_conn import get_db
 from services.book import business
 from services.book import business, schema
-from datetime import date
+from datetime import datetime
 
 
 router = APIRouter(prefix="/book", tags=["book"])
@@ -38,5 +38,7 @@ async def query_book_restaurant(RID: int, db: Session = Depends(get_db)):
     
 
 @router.post("/check_seats", summary="店家查詢座位資訊")
-async def check_seats(RID: int,ReDate:date, Person:int,db: Session = Depends(get_db)):
-    return await business.check_seats(RID,ReDate,Person,db)
+async def check_seats(RID: int, ReDate: str, Person: int, db: Session = Depends(get_db)):
+    ReDate = ReDate.strip('"')
+    ReDate = datetime.strptime(ReDate, "%Y-%m-%d").date()
+    return await business.check_seats(RID, ReDate, Person, db)
