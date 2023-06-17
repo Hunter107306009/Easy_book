@@ -25,10 +25,6 @@ async def update_book(
 ):
     return await business.update_book(updateBookRequest, db)
 
-@router.get("/check_seats", summary="店家查詢座位資訊")
-async def check_seats(RID: int,ReDate:str, Person:int,db: Session = Depends(get_db)):
-    return await business.check_seats(RID,ReDate,Person,db)
-
 
 @router.get("/query_book_member", summary="會員查詢訂位")
 async def query_book_member(MemberID: int, db: Session = Depends(get_db)):
