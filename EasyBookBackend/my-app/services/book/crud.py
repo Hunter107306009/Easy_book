@@ -89,8 +89,24 @@ async def book_reservation(postRequest: schema.BookRequest, db=Session):
         SeatsRecord.Is_Reserved == "F",
     ).update({"Is_Reserved": "Y"})
 
+    # 顯示訂位人姓名、電話
+    member_info = [
+        {"ID": data[0], "Name": data[1], "Phone": data[2]}
+        for data in db.query(Member.ID, Member.Name, Member.Phone)
+        .filter(Member.ID == postRequest.ID)
+        .all()
+    ]
+
     db.commit()
-    return {"code": 200, "data": {"message": "訂位成功", "桌號": tno}}
+    return {
+        "code": 200,
+        "data": {
+            "message": "訂位成功",
+            "Name": member_info[0]["Name"],
+            "Phone": member_info[0]["Phone"],
+            "桌號": tno,
+        },
+    }
 
 
 async def cancel_reservation(ReNumber: int, db: Session):
