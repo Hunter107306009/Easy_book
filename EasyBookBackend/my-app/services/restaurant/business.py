@@ -82,7 +82,7 @@ async def update_restaurant_info(
 async def get_restaurant_list(db: Session):
     restaurant_list = await crud.get_restaurant_list(db)
     if not restaurant_list:
-        return Response.Error(msg="查無此餐廳列表，可能已遭刪除。")
+        return Response.Error(msg="尚無餐廳。")
     else:
         return Response.Success(data=restaurant_list)
 
@@ -126,6 +126,6 @@ async def add_consumption_record(
         consumption_record = await crud.add_consumption_record(
             Is_member["ID"], AddConsumptionRecordRequest, db
         )
-        return Response.Success(data=consumption_record)
+        return Response.Success(data=None)
     else:
         return Response.Error(msg="查無此會員資訊")
