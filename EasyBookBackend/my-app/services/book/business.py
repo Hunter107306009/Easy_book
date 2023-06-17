@@ -59,3 +59,31 @@ async def update_book(updateBookRequest: schema.UpdateBookRequest, db: Session):
             return Response.Error(msg="有該筆訂位記錄，但是記錄有誤，請前端確認代的值是否正確。")
 
         return Response.Success(data=None)
+
+
+async def query_book_member(MemberID: int, db: Session):
+    Is_member = await crud.get_account_info_by_ID(MemberID, db)
+
+    if Is_member:
+        reservation_info = await crud.get_reservation_info_by_MemberID(MemberID, db)
+
+        if reservation_info:
+            return Response.Success(data=reservation_info)
+        else:
+            return Response.Success(data=[])
+    else:
+        return Response.Error(msg="查無此會員資訊")
+
+
+async def query_book_restaurant(RID: int, db: Session):
+    Is_restaurant = await crud.get_restaurant_info_by_ID(RID, db)
+
+    if Is_restaurant:
+        reservation_info = await crud.get_reservation_info_by_RID(RID, db)
+
+        if reservation_info:
+            return Response.Success(data=reservation_info)
+        else:
+            return Response.Success(data=[])
+    else:
+        return Response.Error(msg="查無此餐廳資訊")

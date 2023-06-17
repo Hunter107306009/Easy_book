@@ -26,3 +26,13 @@ async def update_book(
     updateBookRequest: schema.UpdateBookRequest, db: Session = Depends(get_db)
 ):
     return await business.update_book(updateBookRequest, db)
+
+
+@router.get("/query_book_member", summary="會員查詢訂位")
+async def query_book_member(MemberID: int, db: Session = Depends(get_db)):
+    return await business.query_book_member(MemberID, db)
+
+
+@router.get("/query_book_restaurant", summary="店家查詢訂位")
+async def query_book_restaurant(RID: int, db: Session = Depends(get_db)):
+    return await business.query_book_restaurant(RID, db)
