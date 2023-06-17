@@ -1,4 +1,12 @@
-from utils.db_model import Member, Seats, Restaurant, Reservation, SeatsRecord
+from utils.db_model import (
+    Member,
+    Seats,
+    Restaurant,
+    Reservation,
+    SeatsRecord,
+    Consumptions,
+    BlackList,
+)
 from sqlalchemy.orm.session import Session
 from services.restaurant import schema
 import datetime
@@ -38,13 +46,39 @@ async def get_account_info_by_account(account: str, db: Session):
         return None
 
 
+async def get_account_info_by_RID(RID: str, db: Session):
+    account_info = [
+        {
+            "RID": data[0],
+            "RName": data[1],
+            "RPhone": data[2],
+            "RAddress": data[3],
+            "URL": data[4],
+        }
+        for data in db.query(
+            Restaurant.RID,
+            Restaurant.RName,
+            Restaurant.RPhone,
+            Restaurant.RAddress,
+            Restaurant.URL,
+        )
+        .filter(Restaurant.RID == RID)
+        .all()
+    ]
+
+    if len(account_info) > 0:
+        return account_info[0]
+    else:
+        return None
+
+
 async def create_restaurant(
-    createRestaurantRequest: schema.CreateRestaurantRequest, db: Session
+    hash_pwd: str, createRestaurantRequest: schema.CreateRestaurantRequest, db: Session
 ):
     db.add(
         Restaurant(
             RAccount=createRestaurantRequest.RAccount,
-            RPwd=createRestaurantRequest.Rpwd,
+            RPwd=hash_pwd,
             RName=createRestaurantRequest.RName,
             RPhone=createRestaurantRequest.RPhone,
             RAddress=createRestaurantRequest.RAddress,
@@ -152,3 +186,119 @@ async def create_restaurant_seats_record(RID: int, db: Session):
         )
 
         db.commit()
+
+
+##################
+async def get_restaurant_info(restaurant_id: int, db: Session):
+    restaurant_info = [
+        {
+            "RID": data[0],
+            "RName": data[1],
+            "RPhone": data[2],
+            "RAddress": data[3],
+            "URL": data[4],
+        }
+        for data in db.query(
+            Restaurant.RID,
+            Restaurant.RName,
+            Restaurant.RPhone,
+            Restaurant.RAddress,
+            Restaurant.URL,
+        )
+        .filter(restaurant_id == Restaurant.RID)
+        .all()
+    ]
+
+    return restaurant_info
+
+
+async def get_restaurant_list(db: Session):
+    restaurant_list = [
+        {"RID": data[0], "RName": data[1], "RAddress": data[2], "URL": data[3]}
+        for data in db.query(
+            Restaurant.RID, Restaurant.RName, Restaurant.RAddress, Restaurant.URL
+        ).all()
+    ]
+
+    return restaurant_list
+
+
+async def update_restaurant_info(
+    hash_pwd, UpdateRestaurantRequest: schema.UpdateRestaurantRequest, db: Session
+):
+    db.query(Restaurant).filter(
+        Restaurant.RID == UpdateRestaurantRequest.RID,
+    ).update(
+        {
+            "RPwd": hash_pwd,
+            "RName": UpdateRestaurantRequest.RName,
+            "RPhone": UpdateRestaurantRequest.RPhone,
+            "RAddress": UpdateRestaurantRequest.RAddress,
+            "URL": UpdateRestaurantRequest.URL,
+        }
+    )
+    db.commit()
+
+
+async def get_blacklist_list(db: Session):
+    blacklist = [
+        {"BID": data[0], "Name": data[1], "Phone": data[2], "NonArrive": data[3]}
+        for data in db.query(
+            BlackList.BID, Member.Name, Member.Phone, BlackList.NonArrive
+        )
+        .filter(BlackList.BID == Member.ID)
+        .all()
+    ]
+    if blacklist:
+        return blacklist
+    else:
+        return []
+
+
+async def is_in_blacklist(id: int, db: Session):
+    blacklist = [
+        {"BID": data[0]}
+        for data in db.query(BlackList.BID).filter(BlackList.BID == id).all()
+    ]
+    if blacklist:
+        return blacklist
+    else:
+        return None
+
+
+async def add_to_blacklist(
+    id: int, AddToBlacklistRequest: schema.AddToBlacklistRequest, db: Session
+):
+    db.add(BlackList(BID=id, NonArrive=AddToBlacklistRequest.NonArrive))
+    db.commit()
+
+
+async def add_consumption_record(
+    memberID: int,
+    AddConsumptionRecordRequest: schema.AddConsumptionRecordRequest,
+    db: Session,
+):
+    db.add(
+        Consumptions(
+            CMID=memberID,
+            CRID=AddConsumptionRecordRequest.RID,
+            Consumptions=AddConsumptionRecordRequest.Consumptions,
+            CTime=datetime.datetime.now(),
+            PointsChange=AddConsumptionRecordRequest.Consumptions // 100,
+        )
+    )
+    db.commit()
+
+
+async def get_member_info_by_phone(phone: str, db: Session):
+    member_info = [
+        {
+            "ID": data[0],
+        }
+        for data in db.query(Member.ID).filter(Member.Phone == phone).all()
+    ]
+
+    if len(member_info) > 0:
+        return member_info[0]
+    else:
+        return None

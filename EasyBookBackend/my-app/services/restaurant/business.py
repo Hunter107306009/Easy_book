@@ -14,7 +14,8 @@ async def create_restaurant(
     if account_info:
         return Response.Error(msg="該帳號已被註冊過，請換一個帳號！")
     else:
-        await crud.create_restaurant(createRestaurantRequest, db)
+        hash_pwd = sha_256(createRestaurantRequest.Rpwd)
+        await crud.create_restaurant(hash_pwd, createRestaurantRequest, db)
 
         account_info = await crud.get_account_info_by_account(
             createRestaurantRequest.RAccount, db
@@ -32,10 +33,99 @@ async def restaurant_login(
         restaurantLoginRequest.RAccount, db
     )
 
+    reutrn_restaurant_info = {
+        "RID": restaurant_info["RID"],
+        "RAccount": restaurant_info["RAccount"],
+        "RRNameID": restaurant_info["RName"],
+        "RPhone": restaurant_info["RPhone"],
+        "RAddress": restaurant_info["RAddress"],
+        "URL": restaurant_info["URL"],
+    }
+
     if restaurant_info:
-        if restaurant_info["RPwd"] == restaurantLoginRequest.Rpwd:
-            return Response.Success(data=restaurant_info)
+        if restaurant_info["RPwd"] == sha_256(restaurantLoginRequest.Rpwd):
+            return Response.Success(data=reutrn_restaurant_info)
         else:
             return Response.Error(msg="密碼錯誤，請重新輸入。")
     else:
         return Response.Error(msg="此帳號尚未註冊，請重新確認或前往註冊。")
+
+
+#################
+# 取得餐廳資訊
+async def get_restaurant_info(restaurant_id: int, db: Session):
+    restaurant_info = await crud.get_restaurant_info(restaurant_id, db)
+
+    if not restaurant_info:
+        return Response.Error(msg="查無此餐廳資訊，可能已遭刪除。")
+    else:
+        return Response.Success(data=restaurant_info)
+
+
+# 更改餐廳資訊
+async def update_restaurant_info(
+    UpdateRestaurantRequest: schema.UpdateRestaurantRequest, db: Session
+):
+    update_restaurant_info = await crud.get_account_info_by_RID(
+        UpdateRestaurantRequest.RID, db
+    )
+    hash_pwd = sha_256(UpdateRestaurantRequest.RPwd)
+
+    if update_restaurant_info:
+        await crud.update_restaurant_info(hash_pwd, UpdateRestaurantRequest, db)
+        return Response.Success(data=None)
+    else:
+        return Response.Error(msg="更新失敗，查無此帳號資訊，請與相關人員聯絡～謝謝")
+
+
+# 取得餐廳列表
+async def get_restaurant_list(db: Session):
+    restaurant_list = await crud.get_restaurant_list(db)
+    if not restaurant_list:
+        return Response.Error(msg="查無此餐廳列表，可能已遭刪除。")
+    else:
+        return Response.Success(data=restaurant_list)
+
+
+# 取得黑名單列表
+async def get_blacklist_list(db: Session):
+    black_list = await crud.get_blacklist_list(db)
+    if not black_list:
+        return Response.Error(msg="查無此黑名單列表，可能已遭刪除。")
+
+    return Response.Success(data=black_list)
+
+
+# 新增黑名單
+async def add_to_blacklist(
+    AddToBlacklistRequest: schema.AddToBlacklistRequest, db: Session
+):
+    black_info = await crud.get_member_info_by_phone(AddToBlacklistRequest.Phone, db)
+
+    Is_blacklist = await crud.is_in_blacklist(black_info["ID"], db)
+
+    if black_info:
+        if Is_blacklist:
+            return Response.Error(msg="此會員已被加入黑名單囉～")
+        else:
+            await crud.add_to_blacklist(black_info["ID"], AddToBlacklistRequest, db)
+            return Response.Success(data=None)
+    else:
+        return Response.Error(msg="查無此會員資訊")
+
+
+# 新增會員消費紀錄
+async def add_consumption_record(
+    AddConsumptionRecordRequest: schema.AddConsumptionRecordRequest, db: Session
+):
+    Is_member = await crud.get_member_info_by_phone(
+        AddConsumptionRecordRequest.Phone, db
+    )
+
+    if Is_member:
+        consumption_record = await crud.add_consumption_record(
+            Is_member["ID"], AddConsumptionRecordRequest, db
+        )
+        return Response.Success(data=consumption_record)
+    else:
+        return Response.Error(msg="查無此會員資訊")

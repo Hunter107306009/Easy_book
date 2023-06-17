@@ -16,3 +16,34 @@ class CreateRestaurantRequest(BaseModel):
 class RestaurantLoginRequest(BaseModel):
     RAccount: str
     Rpwd: str
+
+
+###############
+class RestaurantRequest(BaseModel):
+    RID: int
+    Rname: str
+    Rphone: int
+    RAddress: str
+    RAccount: str
+    RPwd: str
+    image_url: str
+
+
+class UpdateRestaurantRequest(BaseModel):
+    RPwd: str
+    RID: int
+    RName: str
+    RPhone: str
+    RAddress: str
+    URL: str
+
+
+class AddToBlacklistRequest(BaseModel):
+    Phone: str
+    NonArrive: int
+
+
+class AddConsumptionRecordRequest(BaseModel):
+    Phone: str
+    RID: int
+    Consumptions: int
