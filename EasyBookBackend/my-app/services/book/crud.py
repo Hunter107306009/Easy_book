@@ -3,7 +3,7 @@ from sqlalchemy.orm.session import Session
 from utils.db_model import Reservation, Member, SeatsRecord, BlackList, Restaurant
 import datetime
 from fastapi import FastAPI, HTTPException
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 from typing import List, Dict
 from collections import defaultdict
 
@@ -387,8 +387,8 @@ async def get_restaurant_info_by_ID(RID: int, db: Session):
         return None
 
 
-def check_seats_availability(RID: int, Date: str, Person: int, db: Session):
-    start_time = datetime.strptime(str(Date), "%Y-%m-%d").replace(hour=0, minute=0, second=0)
+def check_seats_availability(RID: int, Date: date, Person: int, db: Session):
+    start_time = datetime.combine(Date, datetime.min.time())
     end_time = start_time + timedelta(days=1)
 
     seats = None
@@ -425,5 +425,6 @@ def check_seats_availability(RID: int, Date: str, Person: int, db: Session):
     availability = list(time_slots.values())
 
     return availability
+
 
 
