@@ -87,7 +87,7 @@ async def book_reservation(postRequest: schema.BookRequest, db=Session):
     ).update({"Is_Reserved": "Y"})
 
     db.commit()
-    return {"code": 200, "data": {"data": "訂位成功", "桌號": tno}}
+    return {"code": 200, "data": {"message": "訂位成功", "桌號": tno}}
 
 
 async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
@@ -107,7 +107,7 @@ async def cancel_reservation(cancel_request: schema.CancelRequest, db: Session):
     current_date = datetime.now().date()
 
     if reservation.ReTime.date() < current_date:
-        raise HTTPException(status_code=200, detail="不能取消訂位")
+        raise HTTPException(status_code=400, detail="不能取消訂位")
 
     db.delete(reservation)
     db.commit()
