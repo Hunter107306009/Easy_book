@@ -35,10 +35,10 @@ async def restaurant_login(
 
     reutrn_restaurant_info = {
         "RID": restaurant_info["RID"],
-        "RAccount": restaurant_info["RAccount"],
-        "RRNameID": restaurant_info["RName"],
-        "RPhone": restaurant_info["RPhone"],
-        "RAddress": restaurant_info["RAddress"],
+        "Account": restaurant_info["RAccount"],
+        "Name": restaurant_info["RName"],
+        "Phone": restaurant_info["RPhone"],
+        "Address": restaurant_info["RAddress"],
         "URL": restaurant_info["URL"],
     }
 
