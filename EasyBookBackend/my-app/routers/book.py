@@ -36,6 +36,6 @@ async def query_book_restaurant(RID: int, db: Session = Depends(get_db)):
     return await business.query_book_restaurant(RID, db)
     
 
-@router.get("/check_seats", summary="店家查詢座位資訊")
+@router.post("/check_seats", summary="店家查詢座位資訊")
 async def check_seats(RID: int,ReDate:str, Person:int,db: Session = Depends(get_db)):
     return await business.check_seats(RID,ReDate,Person,db)
