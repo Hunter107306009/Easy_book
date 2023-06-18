@@ -1,2 +1,4 @@
-# Easy_book
-Provide a platform for consumers to have a seat selection service when making restaurant reservations, and establish a platform membership system based on the number of visits to the store or the amount of consumption. Hence, consumers with higher membership levels have priority in seat selection. In addition, stores can also use this platform to arrange seats for consumers who call to make reservations.
+# Eazy Book
+Provide a platform for consumers to register as members for restaurant reservations. Establish a membership system on the platform based on the frequency of visits or the amount of consumption. Additionally, create a record of transactions and accumulate member points. Restaurants can also register on this platform and automatically allocate table numbers based on the number of guests for reservations. The platform also includes a blacklist management feature.
+
+For more detailed information about the frontend and backend processes, please refer to the corresponding folder.
