@@ -61,6 +61,14 @@ async def get_restaurant_info(restaurant_id: int, db: Session):
     else:
         return Response.Success(data=restaurant_info)
 
+#取得特定餐廳資訊
+async def get_search_restaurant(restaurant_name: str, db: Session):
+    search_restaurant= await crud.get_search_restaurant(restaurant_name, db)
+
+    if not search_restaurant:
+        return Response.Error(msg="查無此餐廳資訊，可能已遭刪除。")
+    else:
+        return Response.Success(data=search_restaurant)
 
 # 更改餐廳資訊
 async def update_restaurant_info(
