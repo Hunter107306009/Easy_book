@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400&display=swap');
+#blacklist_wrap{
+	font-family: 'Noto Sans TC', sans-serif;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	height:97vh;
+	width:99vw;
+}
+
+#blacklist_center{
+	background-color:#FCFCFC;
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	border-radius:20px;
+	height:550px;
+	width:500px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5),
+              	0 0 2px rgba(0, 0, 0, 0.5) inset;
+}
+
+#blacklist_top{
+	width:90%;
+	height:40%;
+	padding-bottom:30px;
+	border-bottom:1px solid #BEBEBE;
+}
+
+#blacklist_bottom{
+	width:90%;
+	height:10%;
+}
+
+#blacklist_bottom_ans{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:center;
+	overflow:auto;
+	font-family: 'Noto Sans TC', sans-serif;
+	width:90%;
+	height:50%;
+	color:#5B5B5B;
+}
+
+#blacklist_bottom_ans::-webkit-scrollbar {
+  width: 0.5em;
+  background-color: #F5F5F5;
+}
+
+#blacklist_title{
+	font-family: 'Noto Sans TC', sans-serif;
+	color:#5B5B5B;
+	margin-top:20px;
+}
+
+.input_decorate{
+	border: none;
+  	border-bottom: 2px solid #9D9D9D;
+  	outline: none;
+  	background-color: transparent;
+  	transition: border-bottom-color 0.3s;
+  	padding-top:10px;
+  	padding-bottom:10px;
+  	padding-left:10px;
+  	padding-right:20px;
+  	margin-bottom:2vh;
+  	width:60%;
+}
+
+.input_button_decorate{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	border-radius:5px;
+	border-style:none;
+	height:40px;
+	width:60px;
+	background-color:#FFAD86;
+	color:#FCFCFC;
+	font-weight:bold;
+}
+
+.input_button_decorate:hover{
+	cursor:pointer;
+}
+
+#blacklist_form{
+	margin-top:15px;
+	border-radius:5px;
+	border:1px solid #5B5B5B;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:90%;
+	height:80%;
+}
+
+.black_L_unit {
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+  	background-color: #FCFCFC;
+  	border-radius: 10px;
+  	border-style: solid;
+  	border-color: #CCCCCC;
+  	width:70%;
+	height:20%;
+}
+
+.black_L_text{
+	margin-left:2px;
+	margin-right:8px;
+	color: #5B5B5B;
+}

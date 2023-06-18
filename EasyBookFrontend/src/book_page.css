@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400&display=swap');
+
+body {
+  user-select: none;
+}
+
+#book_body{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:start;
+	width:97vw;
+	height:81vh;
+	padding-left:2vw;
+}
+
+#title1{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:30px;
+	font-weight:bold;
+	margin-top:30px;
+	color:#3C3C3C;
+}
+
+#title1_sub{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:15px;
+	color:#6C6C6C;
+}
+
+#seg_decoration{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:90%;
+	height:50px;
+	border-bottom:0.5px solid #9D9D9D;
+	margin-top:20px;
+}
+
+#seg_decoration_text{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:17px;
+	font-weight:bold;
+	color:#3C3C3C;
+}
+
+#seg_decoration_icon{
+	width:20px;
+	height:20px;
+	margin-right:8px;
+}
+
+#title2{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:20px;
+	font-weight:bold;
+	margin-top:20px;
+	color:#3C3C3C;
+}
+
+#form_wrap{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:90%;
+	height:70px;
+	margin-top:20px;
+}
+
+#form_number_of_people{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:start;
+	width:30%;
+	height:100%;
+	margin-right:5%;
+}
+
+#form_date{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:start;
+	width:30%;
+	height:100%;
+}
+
+#form_title{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:17px;
+	font-weight:bold;
+	color:#3C3C3C;	
+	margin-bottom:3px;
+}
+
+.form_select{
+	appearance: none;
+  	padding: 8px;
+  	border: 2px solid #ccc;
+  	border-radius: 4px;
+  	background-color: #fff;
+  	color: #333;
+  	font-size: 14px;
+  	transition: border-color 0.3s ease;
+  	width:100%;
+	height:40px;
+	margin-right:4%;
+}
+
+#form_select_wrap{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:100%;
+}
+
+.form_select_date{
+	appearance: none;
+  	padding: 8px;
+  	border: 2px solid #ccc;
+  	border-radius: 4px;
+  	background-color: #fff;
+  	color: #333;
+  	font-size: 14px;
+  	transition: border-color 0.3s ease;
+  	width:90%;
+	height:40px;
+	margin-right:4%;
+}
+
+#sub_page_switch{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:90%;
+	height:40px;
+	margin-top:20px;
+}
+
+.sub_page_switch_option{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	width:150px;
+	height:100%;
+	font-family: 'Noto Sans TC', sans-serif;
+	color:#3C3C3C;
+}
+
+#restaurnt_sub_page{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:100%;
+	height:60%;
+}
+
+#restaurant_image{
+	border-radius:10px;
+	width:250px;
+	height:150px;
+}
+
+#restaurnt_sub_page_right{
+	width:60%;
+	height:150px;
+	padding-left:10px;
+}
+
+#restaurnt_sub_page_right_title{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:20px;
+	font-weight:bold;
+	color:#3C3C3C;
+	margin:5px;
+}
+
+#restaurnt_sub_page_right_address{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:15px;
+	color:#8E8E8E;
+	margin:5px;
+}
+
+#restaurnt_sub_page_right_annotation{
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:15px;
+	color:#FF7575;
+	margin:5px;
+}
+
+#restaurnt_sub_page_right_box_wrap{
+	display:flex;
+	flex-direction:row;
+	justify-content:start;
+	align-items:center;
+	width:100%;
+	height:35%;
+}
+
+.restaurnt_sub_page_right_box{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width:10%;
+	height:90%;
+	border-radius:10px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.restaurnt_sub_page_right_box:hover{
+	cursor:pointer;
+}
+
+.restaurnt_sub_page_right_box:focus {
+  outline: 5px solid #6C6C6C;
+}
+
+.restaurnt_sub_page_right_box1{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	width:90%;
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:13px;
+	color:#FCFCFC;
+	border-bottom:1px solid #FCFCFC;
+}
+
+.restaurnt_sub_page_right_box2{
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	width:90%;
+	font-family: 'Noto Sans TC', sans-serif;
+	font-size:13px;
+	color:#FCFCFC;	
+}
+
+#form_reason{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+	align-items:start;
+	width:30%;
+	height:100%;
+	margin-right:5%;
+}
+
+#book_btn{
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #7B7B7B;
+  color: #F0F0F0;
+  border: none;
+  font-weight:bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;	
+}
+
+#book_btn:hover{
+	cursor:pointer;
+}
