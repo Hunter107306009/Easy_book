@@ -87,22 +87,28 @@ function Book_page() {
 	function get_restaurant_msg()
 	{
 		axios.get('http://127.0.0.1:8001/restaurant/restaurant_info?restaurant_id='+rid).then(function (response) {
-			console.log(response)
-			if (response.data!=null)
+			let responseData = response.data;
+			console.log(responseData)
+			if (responseData.status=="success")
 			{
-				set_msg_name(response.data.data[0].RName)
-				set_msg_address(response.data.data[0].RAddress)
-				set_msg_phone(response.data.data[0].RPhone)
+				set_msg_name(responseData.data[0].RName)
+				set_msg_address(responseData.data[0].RAddress)
+				set_msg_phone(responseData.data[0].RPhone)
 				console.log("取得餐廳資訊成功");
+			}
+			else if (responseData.status=="error")
+			{
+				alert(responseData.msg);
+				home_page();
 			}
 			else
 			{
-				console.log("取得餐廳資訊的功能有誤");
+				alert("查無此餐廳資訊");
+				home_page();
 			}
 		})
 		.catch(error => {
 			console.log(error);
-			alert("發生前後端串接上的錯誤");
 		});
 	}
 
@@ -159,59 +165,71 @@ function Book_page() {
 
 	function book_handle(){
 		if (getCookie("uesr_id")!=null)
-		{
-			book_Data.ID=modifyJSON(getCookie("uesr_id")).ID;
-			book_Data.Name=modifyJSON(getCookie("uesr_id")).Name;
-			book_Data.Phone=modifyJSON(getCookie("uesr_id")).Phone;
-		}
-		book_Data.RID=rid;
-		book_Data.Reason=document.getElementById("Reason").value;
-		if (SelectedDate!=null && SelectedTime!=null)
-		{
-			book_Data.ReTime=formatDateToISO(now.getFullYear()+" "+SelectedDate+" "+SelectedTime);
-		}
-		book_Data.Person=parseInt(document.getElementById("Person").value[0]);
-		console.log(book_Data);
-		if (book_Data.ID!=null && book_Data.RID!=null && book_Data.Person!=null && book_Data.Name!="" && book_Data.Phone!="" && book_Data.Reason!="" && book_Data.ReTime!="")
-		{
-			axios.post('http://127.0.0.1:8001/book/book', book_Data)
-			.then(response => {
-				let responseData = response.data;
-				console.log(responseData);
-				if (responseData.status=="success")
-				{
-					alert("訂位成功");
-				}
-				else if (responseData.status=="error")
-				{
-					alert(responseData.msg);
-				}
-				else
-				{
-					alert("訂位遭拒");
-				}
-			})
-			.catch(error => {
-				console.log(error);
-				alert("發生前後端串接上的錯誤");
-			});			
-		}
-		else if(book_Data.ID==null)
-		{
-			alert("Cookie已過期，請重新登入");
-			window.location.href = "/";
-		}
-		else
-		{
-			alert("尚有欄位未填寫完畢");
-		}
+        {
+        	if (modifyJSON(getCookie("uesr_id"))!=null)
+			{
+				book_Data.ID=modifyJSON(getCookie("uesr_id")).ID;
+				book_Data.Name=modifyJSON(getCookie("uesr_id")).Name;
+				book_Data.Phone=modifyJSON(getCookie("uesr_id")).Phone;
+			}
+			book_Data.RID=rid;
+			book_Data.Reason=document.getElementById("Reason").value;
+			if (SelectedDate!=null && SelectedTime!=null)
+			{
+				book_Data.ReTime=formatDateToISO(now.getFullYear()+" "+SelectedDate+" "+SelectedTime);
+			}
+			book_Data.Person=parseInt(document.getElementById("Person").value[0]);
+			console.log(book_Data);
+			if (book_Data.ID!=null && book_Data.RID!=null && book_Data.Person!=null && book_Data.Name!="" && book_Data.Phone!="" && book_Data.Reason!="" && book_Data.ReTime!="")
+			{
+				axios.post('http://127.0.0.1:8001/book/book', book_Data)
+				.then(response => {
+					let responseData = response.data;
+					console.log(responseData);
+					if (responseData.status=="success")
+					{
+						alert("訂位成功");
+					}
+					else if (responseData.status=="error")
+					{
+						alert(responseData.msg);
+					}
+					else
+					{
+						alert("訂位遭拒");
+					}
+				})
+				.catch(error => {
+					console.log(error);
+				});			
+			}
+			else if(book_Data.ID==null)
+			{
+				alert("Cookie已過期，請重新登入");
+				window.location.href = "/";
+			}
+			else if(book_Data.RID==null)
+			{
+				alert("本餐廳已不提供訂位服務");
+				home_page();
+			}
+			else
+			{
+				alert("尚有欄位未填寫完畢");
+			}
+        }
+        else if(getCookie("uesr_id")==null)
+        {
+            alert("Cookie已過期，請重新登入");
+            window.location.href = "/";
+        }
 	}
 
 	function handle_sub_page_right_box()
 	{
 		seats_needed.RID=rid;
 		seats_needed.Person=document.getElementById("Person").value[0];
-		seats_needed.BookTime=(now.getFullYear()+" "+"0"+SelectedDate).replace(" ","-").replace("月","-").replace("日","");
+		seats_needed.BookTime=(now.getFullYear()+" "+"0"+ document.getElementById("selected_date").value).replace(" ","-").replace("月","-").replace("日","");
 
 		if (seats_needed.RID!=null && seats_needed.Person!=null && seats_needed.BookTime!=""){
 			console.log(seats_needed);
@@ -237,7 +255,7 @@ function Book_page() {
 							}
 						}
 						console.log(responseData.data);
-						console.log(small_box_color);
+						console.log(small_box_color_Temporary);
 						set_small_box_status(small_box_status_Temporary);
       					set_small_box_color(small_box_color_Temporary);	
 					}
@@ -245,7 +263,7 @@ function Book_page() {
 				}
 				else
 				{
-					console.log("獲取當前選項位置資訊遭拒");
+					console.log("獲取到錯誤的選項位置資訊");
 				}
 			})
 			.catch(error => {
@@ -256,10 +274,11 @@ function Book_page() {
 		else if(seats_needed.RID==null)
 		{
 			alert("Rid不應該為空，請重新從首頁進入本頁面");
+			home_page();
 		}
 		else
 		{
-			alert("發生意料之外的錯誤");
+			console.log("發生意料之外的錯誤");
 		}
 	}
 

@@ -13,7 +13,7 @@ function Blacklist() {
 
 	function new_black_user(){
 		black_user.Phone=document.getElementById("phone").value;
-		black_user.NonArrive=document.getElementById("bird").value;
+		black_user.NonArrive=1;
 		if (black_user.Phone!="" && black_user.NonArrive!=null)
 		{
 			axios.post('http://127.0.0.1:8001/restaurant/add_to_blacklist',black_user).then(function (response) {
@@ -67,7 +67,6 @@ function Blacklist() {
 						<div id="blacklist_title">新增黑名單用戶</div>
 						<div id="blacklist_form">
 							<input type="text" id="phone" className="input_decorate" placeholder="黑名單電話"/>
-							<input type="text" id="bird" className="input_decorate" placeholder="放鳥次數"/>
 							<button className="input_button_decorate" onClick={new_black_user}>加入</button>
 						</div>
 					</div>

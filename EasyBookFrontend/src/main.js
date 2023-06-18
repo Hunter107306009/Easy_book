@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useState , useEffect } from 'react';
 
 function Main() {
-	let  [res_message, set_res_message] = React.useState([])
+	let  [res_message, set_res_message] = React.useState(null)
 
 	function image_judge(url){
 		if (url.length>15)
@@ -20,10 +20,43 @@ function Main() {
 	function personal_page() {
 		window.location.href="/personal_page";
 	};
+	
 	function book_page(event) {
 		let clickedDiv = event.currentTarget;
 	  	let divValue = clickedDiv.getAttribute('value');
 		window.location.href="/book_page?RID="+divValue;
+	};
+
+	function book_page_search() {
+		let query_name=document.getElementById("search").value;
+		if (query_name!="")
+		{
+			axios.get('http://127.0.0.1:8001/restaurant/search_restaurant?restaurant_name='+query_name)
+			.then(response => {
+				let responseData = response.data;
+				console.log(responseData);
+				if (responseData.status=="success")
+				{
+					if (responseData.data[0].RID!=null)
+					{
+						document.getElementById("search").value="";
+						window.location.href="/book_page?RID="+responseData.data[0].RID;
+					}
+				}
+				else if (responseData.status=="error")
+				{
+					document.getElementById("search").value="";
+					alert(responseData.msg);
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		}
+		else
+		{
+			alert("尚有未填寫的欄位");
+		}
 	};
 
 	useEffect(() => {
@@ -37,6 +70,7 @@ function Main() {
 			}
 			else if (responseData.status=="error")
 			{
+				//通常不會來到這行，這個api是單純要資料，不存在前端傳值有錯的可能
 				alert(responseData.msg);
 			}
 		})
@@ -65,7 +99,11 @@ function Main() {
 					<div id="search_bg_block"></div>
 					<div id="search_block">
 						<div id="search_block_level2">
-							<div id="search_description">瀏覽您想訂位的餐廳</div>
+							<div id="search_description">查找想訂位的餐廳</div>
+							<div id="search_icon_outside">
+								<input id="search" placeholder="Search..."/>
+								<img id="search_icon" src={require('./icon/search.png')} onClick={book_page_search}/>
+							</div>
 						</div>
 					</div>
 				</div>

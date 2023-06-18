@@ -50,17 +50,18 @@ function Checkout() {
   	{
 	    "Phone": "",
 	    "RID": null,
-	    "Consumptions": null
+	    "Consumptions": ""
 	}
 
 
 	function consumption_handle(){
 		checkout_Data.Phone=document.getElementById("consumption_phone").value;
 		checkout_Data.RID=parseInt(getCookie("restaurant_id"));
-		checkout_Data.Consumptions=parseInt(document.getElementById("consumption_sum").value);
+		checkout_Data.Consumptions=document.getElementById("consumption_sum").value;
 		console.log(checkout_Data);
-		if (checkout_Data.Phone!="" && checkout_Data.Consumptions!=null && checkout_Data.RID!=null)
+		if (checkout_Data.Phone!="" && checkout_Data.Consumptions!="" && checkout_Data.RID!=null)
 		{
+			console.log(checkout_Data.Consumptions);
 			axios.post('http://127.0.0.1:8001/restaurant/add_consumption_record', checkout_Data)
 			.then(response => {
 				let responseData = response.data;
@@ -80,7 +81,6 @@ function Checkout() {
 			})
 			.catch(error => {
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
 			});
 		}
 		else if (checkout_Data.RID==null)

@@ -64,8 +64,8 @@ function Login() {
 				}
 			})
 			.catch(error => {
+				console.log("!!!!!!!!!!");
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
 			});
 		}
 		else if (res_login_Data.RAccount!="" && res_login_Data.Rpwd!="" && opt=="店家")
@@ -88,8 +88,8 @@ function Login() {
 				}
 			})
 			.catch(error => {
+				console.log("!!!!!!!!!!");
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
 			});
 		}
 		else

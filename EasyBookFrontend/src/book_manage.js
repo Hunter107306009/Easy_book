@@ -47,7 +47,6 @@ function Book_manage() {
             })
             .catch(error => {
                 console.log(error);
-                alert("發生前後端串接上的錯誤");
             });
         }
         else if(getCookie("restaurant_id")==null)

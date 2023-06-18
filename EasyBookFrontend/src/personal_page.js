@@ -138,7 +138,6 @@ function PersonalPage() {
 			})
 			.catch(error => {
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
 			});
 		}
 		else if(modifyJSON(getCookie("uesr_id"))==null)
@@ -187,7 +186,6 @@ function PersonalPage() {
 			})
 			.catch(error => {
 				console.log(error);
-				//alert("發生前後端串接上的錯誤");
 			});
 		}
 		else if(new_cus_Data.ID==null)

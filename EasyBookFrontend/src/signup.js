@@ -75,12 +75,13 @@ function Signup() {
 				}
 				else if (responseData.status=="error")
 				{
+					//執行這行，通常是電話已經被註冊過
 					alert(responseData.msg);
 				}
 			})
 				.catch(error => {
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
+				console.log("!!!!!!!!!!");
 			});
 		}
 		else if(res_register_Data.RAccount!="" && res_register_Data.Rpwd!="" && res_register_Data.RName!="" && res_register_Data.RPhone!="" && res_register_Data.RAddress!="" && res_register_Data.Url!="" && opt=="店家")
@@ -96,12 +97,13 @@ function Signup() {
 				}
 				else if (responseData.status=="error")
 				{
+					//執行這行，通常是帳號已經被註冊過
 					alert(responseData.msg);
 				}
 			})
 				.catch(error => {
 				console.log(error);
-				alert("發生前後端串接上的錯誤");
+				console.log("!!!!!!!!!!");
 			});
 		}
 		else
