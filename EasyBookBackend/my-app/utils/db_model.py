@@ -80,18 +80,6 @@ class BlackList(BASE):
     NonArrive = Column(INTEGER)
 
 
-class Alternate(BASE):
-    __tablename__ = "ALTERNATE"
-
-    ALNO = Column(INTEGER, primary_key=True, nullable=False, autoincrement=True)
-    ALRID = Column(INTEGER, ForeignKey("RESTAURANT.RID"), nullable=False)
-    ALMID = Column(INTEGER, ForeignKey("MEMBER.ID"), nullable=False)
-    ALReason = Column(String(255))
-    ALCreateTime = Column(DateTime, nullable=False)
-    ALTime = Column(DateTime, nullable=False)
-    ALPerson = Column(INTEGER, nullable=False)
-
-
 class Consumptions(BASE):
     __tablename__ = "CONSUMPTIONS"
 
