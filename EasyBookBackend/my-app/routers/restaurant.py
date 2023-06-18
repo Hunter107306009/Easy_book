@@ -32,6 +32,10 @@ async def get_restaurant_list(db: Session = Depends(get_db)):
 async def get_restaurant_info(restaurant_id: int, db: Session = Depends(get_db)):
     return await business.get_restaurant_info(restaurant_id, db)
 
+@router.get("/search_restaurant", summary="搜尋特定餐廳")
+async def get_search_restaurant(restaurant_name: str, db: Session = Depends(get_db)):
+    return await business.get_search_restaurant(restaurant_name, db)
+
 
 @router.patch("/update_restaurant_info", summary="餐廳資訊修改")
 async def update_restaurant_info(
