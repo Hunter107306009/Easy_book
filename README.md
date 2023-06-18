@@ -3,6 +3,18 @@ Provide a platform for consumers to register as members for restaurant reservati
 
 For more detailed information about the frontend and backend processes, please refer to the corresponding folder.
 
+## Contributors
+
+| 組員   | 系級     | 學號      | 工作分配                       |
+|--------|----------|-----------|--------------------------------|
+| 吳泓澈 | 資碩工一 | 111753116 | 組長、DEMO、前端開發           |
+| 朱筑筠 | 資碩工一 | 111753113 | 報告、簡報製作、後端開發             |
+| 李家蓁 | 資碩工一 | 111753129 | 前端開發                     |
+| 陳品伃 | 資碩計一 | 112753204 | 後端開發、README整理          |
+| 羅鈺涵 | 資碩計一 | 112753208 | 後端開發                       |
+| 楊迪奇 | 資碩計一 | 111753231 | 後端開發                        |
+| 羅紹耘 | 資碩計一 | 111753217 | 資料庫建置                       |
+
 ## Fronted
 > 使用工具
 * HTML
