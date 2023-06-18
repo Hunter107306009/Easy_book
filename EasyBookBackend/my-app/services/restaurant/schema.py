@@ -40,7 +40,6 @@ class UpdateRestaurantRequest(BaseModel):
 
 class AddToBlacklistRequest(BaseModel):
     Phone: str
-    NonArrive: int
 
 
 class AddConsumptionRecordRequest(BaseModel):

@@ -211,6 +211,7 @@ async def get_restaurant_info(restaurant_id: int, db: Session):
 
     return restaurant_info
 
+
 async def get_search_restaurant(restaurant_name: str, db: Session):
     restaurant_name = [
         {
@@ -279,8 +280,10 @@ async def get_blacklist_list(db: Session):
 
 async def is_in_blacklist(id: int, db: Session):
     blacklist = [
-        {"BID": data[0]}
-        for data in db.query(BlackList.BID).filter(BlackList.BID == id).all()
+        {"BID": data[0], "NonArrive": data[1]}
+        for data in db.query(BlackList.BID, BlackList.NonArrive)
+        .filter(BlackList.BID == id)
+        .all()
     ]
     if blacklist:
         return blacklist
@@ -288,10 +291,15 @@ async def is_in_blacklist(id: int, db: Session):
         return None
 
 
-async def add_to_blacklist(
-    id: int, AddToBlacklistRequest: schema.AddToBlacklistRequest, db: Session
-):
-    db.add(BlackList(BID=id, NonArrive=AddToBlacklistRequest.NonArrive))
+async def add_to_blacklist(id: int, db: Session):
+    db.add(BlackList(BID=id, NonArrive=1))
+    db.commit()
+
+
+async def update_to_blacklist(blacklist: list, db: Session):
+    db.query(BlackList).filter(
+        BlackList.BID == blacklist[0]["BID"],
+    ).update({"NonArrive": blacklist[0]["NonArrive"] + 1})
     db.commit()
 
 

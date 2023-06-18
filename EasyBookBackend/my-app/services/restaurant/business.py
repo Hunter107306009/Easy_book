@@ -61,14 +61,16 @@ async def get_restaurant_info(restaurant_id: int, db: Session):
     else:
         return Response.Success(data=restaurant_info)
 
-#取得特定餐廳資訊
+
+# 取得特定餐廳資訊
 async def get_search_restaurant(restaurant_name: str, db: Session):
-    search_restaurant= await crud.get_search_restaurant(restaurant_name, db)
+    search_restaurant = await crud.get_search_restaurant(restaurant_name, db)
 
     if not search_restaurant:
         return Response.Error(msg="查無此餐廳資訊，可能已遭刪除。")
     else:
         return Response.Success(data=search_restaurant)
+
 
 # 更改餐廳資訊
 async def update_restaurant_info(
@@ -110,13 +112,14 @@ async def add_to_blacklist(
 ):
     black_info = await crud.get_member_info_by_phone(AddToBlacklistRequest.Phone, db)
 
-    Is_blacklist = await crud.is_in_blacklist(black_info["ID"], db)
-
     if black_info:
+        Is_blacklist = await crud.is_in_blacklist(black_info["ID"], db)
+
         if Is_blacklist:
-            return Response.Error(msg="此會員已被加入黑名單囉～")
+            await crud.update_to_blacklist(Is_blacklist, db)
+            return Response.Success(data=None)
         else:
-            await crud.add_to_blacklist(black_info["ID"], AddToBlacklistRequest, db)
+            await crud.add_to_blacklist(black_info["ID"], db)
             return Response.Success(data=None)
     else:
         return Response.Error(msg="查無此會員資訊")
