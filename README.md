@@ -34,7 +34,7 @@ For more detailed information about the frontend and backend processes, please r
 
   
 > Packages we use
-全部都包含在docker內，只要下指令```docker compose up backend```就會自動安裝了
+
 ``` Python
 fastapi==0.95.0
 fastapi-login==1.8.3
@@ -48,3 +48,4 @@ SQLAlchemy==1.4.46
 PyMySQL==1.0.2
 cryptography
 ```
+全部都包含在docker內，只要下指令```docker compose up backend```就會自動安裝了
