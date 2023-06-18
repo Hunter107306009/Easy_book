@@ -211,6 +211,28 @@ async def get_restaurant_info(restaurant_id: int, db: Session):
 
     return restaurant_info
 
+async def get_search_restaurant(restaurant_name: str, db: Session):
+    restaurant_name = [
+        {
+            "RID": data[0],
+            "RName": data[1],
+            "RPhone": data[2],
+            "RAddress": data[3],
+            "URL": data[4],
+        }
+        for data in db.query(
+            Restaurant.RID,
+            Restaurant.RName,
+            Restaurant.RPhone,
+            Restaurant.RAddress,
+            Restaurant.URL,
+        )
+        .filter(restaurant_name == Restaurant.RName)
+        .all()
+    ]
+
+    return restaurant_name
+
 
 async def get_restaurant_list(db: Session):
     restaurant_list = [
