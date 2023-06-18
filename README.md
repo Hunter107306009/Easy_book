@@ -31,3 +31,20 @@ For more detailed information about the frontend and backend processes, please r
 
 > Clone & Set Up
 * [Easy Book Backend](https://github.com/Hunter107306009/Easy_book/tree/main/EasyBookBackend)
+
+  
+> Packages we use
+全部都包含在docker內，只要下指令```docker compose up backend```就會自動安裝了
+``` Python
+fastapi==0.95.0
+fastapi-login==1.8.3
+fastapi-utils==0.2.1
+mysql-connector-python==8.0.32
+numpy==1.21.3
+pandas==1.3.4
+pydantic==1.10.2
+uvicorn==0.21.1
+SQLAlchemy==1.4.46
+PyMySQL==1.0.2
+cryptography
+```
