@@ -3,6 +3,13 @@ Provide a platform for consumers to register as members for restaurant reservati
 
 For more detailed information about the frontend and backend processes, please refer to the corresponding folder.
 
+# Suggested Reading Order
+1. 資料庫題目說明 : 包含專案的基本介紹、需求分析
+2. ERmodel.jpg : 根據需求分析畫出 ER model
+3. Relation_schema.pdf : 根據 ER model 轉成 schema
+4. 系統架構 : 清楚介紹本專案系統的完整功能
+5. EasyBookBackend\EazyBookFronted: 前後端程式碼 
+7. EasyBook_FinalProject : 最終期末展示報告！
 ## Contributors
 
 | 組員   | 系級     | 學號      | 工作分配                       |
